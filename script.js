@@ -105,7 +105,9 @@
 
  var button = document.getElementById('btn-download');
 
- button.onclick = async () => {
+//  button.onclick = async () => {
+
+button.addEventListener('click', ()=>  {
 
      let filters = getComputedStyle(image).getPropertyValue('filter');
      let clip = getComputedStyle(image).getPropertyValue('clip-path');
@@ -202,6 +204,7 @@
          console.log(y);
          console.log(x);
          ctx.filter = filters;
+        
          ctx.drawImage(image, leftIm, topIm, newRight, newBott, (-x), (-y), (newWidth), (newHeight));
          ctx.restore();
 
@@ -216,6 +219,7 @@
          console.log(filters);
          console.log(degs);
          ctx.filter = filters;
+         
          ctx.drawImage(image, leftIm, topIm, newRight, newBott, 0, 0, newWidth, newHeight);
      }
 
@@ -239,7 +243,7 @@
 
     let url = c.toDataURL();
     link.href = url;
-    // window.open(url);
+    window.open(url);
     link.download = "myphoto.png";
      document.body.appendChild(link);
        link.click();
@@ -248,7 +252,9 @@
 
 
 
- };
+//  };
+
+})
 
 
 
@@ -258,7 +264,12 @@
  document.querySelector('.file-uploads__button').addEventListener('click', () => {
     // image.crossOrigin = 'anonymous';
     // image.crossOrigin = "Anonymous";
+    reset();
      image.src = imgUrl.value;
+    //  if ( image.complete || image.complete === undefined ) {
+    //     image.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+    //     image.src = imgUrl.value;
+    // }
  })
 
 
