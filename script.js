@@ -105,9 +105,9 @@
 
  var button = document.getElementById('btn-download');
 
- button.onclick = async () => {
+//  button.onclick = async () => {
 
-// button.addEventListener('click', ()=>  {
+button.addEventListener('click', ()=>  {
 
      let filters = getComputedStyle(image).getPropertyValue('filter');
      let clip = getComputedStyle(image).getPropertyValue('clip-path');
@@ -129,6 +129,11 @@
 
      ctx.width = image.width;
      ctx.height = image.height;
+
+     var c2 = document.createElement('canvas');
+     var ctx2 = c.getContext('2d');
+     c2.width = image.width;
+     c2.height = image.height;
 
      clip = clip.match(/\d+/g).map(Number);
 
@@ -223,39 +228,39 @@
          ctx.drawImage(image, leftIm, topIm, newRight, newBott, 0, 0, newWidth, newHeight);
      }
 
-     let blob = await new Promise(resolve=>c.toBlob(resolve));
-     let url = URL.createObjectURL(blob);
+    //  let blob = await new Promise(resolve=>c.toBlob(resolve));
+    //  let url = URL.createObjectURL(blob);
 
      
-     let a = document.createElement('a');
-     a.href = url;
-     a.download = 'myphoto.png';
-     document.body.appendChild(a);
-     window.open(url);
-     a.click();
-     document.body.removeChild(a);
+    //  let a = document.createElement('a');
+    //  a.href = url;
+    //  a.download = 'myphoto.png';
+    //  document.body.appendChild(a);
+    //  window.open(url);
+    //  a.click();
+    //  document.body.removeChild(a);
 
-    //  var link = document.createElement('a');
+     var link = document.createElement('a');
     //  link.innerHTML = 'download image';
     //  link.addEventListener('click', function (ev) {
     //      link.href = c.toDataURL();
     //      link.download = "mypainting.png";
     //  }, false);
 
-    // let url = c.toDataURL();
-    // link.href = url;
+    let url = c.toDataURL();
+    link.href = url;
     // window.open(url);
-    // link.download = "myphoto.png";
-    //  document.body.appendChild(link);
-    //    link.click();
-    //  document.body.removeChild(link);
+    link.download = "myphoto.png";
+     document.body.appendChild(link);
+       link.click();
+     document.body.removeChild(link);
 
 
 
 
- };
+//  };
 
-// })
+});
 
 
 
@@ -266,7 +271,12 @@
     // image.crossOrigin = 'anonymous';
     // image.crossOrigin = "Anonymous";
     reset();
+
+    // var prefix = "https://cors-anywhere.herokuapp.com/images.pexels.com/photos/879808/pexels-photo-879808.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260";
      image.src = imgUrl.value;
+
+     
+
     //  if ( image.complete || image.complete === undefined ) {
     //     image.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
     //     image.src = imgUrl.value;
@@ -274,10 +284,37 @@
  })
 
 
+//  M.AutoInit();
+
+ document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+  
+  });
 
 
 
+  function changeGradient() {
+    var selector = document.getElementById('overlay-options');
+    var value = selector[selector.selectedIndex].value;
+    document.documentElement.style.setProperty('--mode', value);
+    console.log(value);
+}
 
+document.getElementById('overlay-options').addEventListener('change', changeOverlay);
+
+document.getElementById('gradient-directions').addEventListener('change', changeGradient);
+
+document.getElementById('solid-bcg').addEventListener('click', (event)=> {
+    document.querySelector('.gradient-colors').classList.add('disabled');
+    document.querySelector('.overlay-color').classList.remove('disabled');
+
+})
+
+document.getElementById('gradient-bcg').addEventListener('click', (event)=> {
+    document.querySelector('.overlay-color').classList.add('disabled');
+    document.querySelector('.gradient-colors').classList.remove('disabled');
+})
 
 
 

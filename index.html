@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Images Editor</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700"
   rel="stylesheet">
@@ -13,6 +13,8 @@
 </head>
 
 <body>
+
+  <div class="wrapper">
   <h1>
       <span class='hl'>JS </span>Images Editor
     
@@ -78,10 +80,7 @@
         <label for="bottom">Crop bottom:
             <input id="bottom" type="range" name="bottom" min="0" max="1000" value="0" data-sizing="px">
           </label>
-<!-- 
-          <label for="rotate">Rotate right:
-              <input id="rotateR" type="range" name="rotateR" min="0" max="360" value="0" data-sizing="deg">
-            </label> -->
+
 
             <label for="rotate">Rotate:
                 <input id="rotateL" type="range" name="rotateL" min="-360" max="360" value="0" data-sizing="deg">
@@ -89,9 +88,84 @@
 
             
 
-    <!-- <label for="base">Base Color
+
+
+  <div class="input-field col s4">
+      <select id="overlay-options">
+        <option value="normal"selected>normal</option>
+        <option value="multiply">Multiply</option>
+        <option value="screen">Screen</option>
+        <option value="overlay">Overlay</option>
+        <option value="darken">darken</option>
+        <option value="lighten">lighten</option>
+        <option value="color-dodge">color-dodge</option>
+        <option value="color-burn">color-burny</option>
+        <option value="hard-light">hard-light</option>
+        <option value="soft-light">soft-light</option>
+        <option value="difference">difference</option>
+        <option value="exclusion">exclusion</option>
+        <option value="hue">hue</option>
+        <option value="saturation">saturation</option>
+        <option value="color">color</option>
+        <option value="luminosity">luminosityt</option>
+      </select>
+      <label>Choose overlay option</label>
+    </div>
+
+    <div>
+        <p>
+          <label>
+            <input id="solid-bcg" name="group1" type="radio" checked />
+            <span>Solid background</span>
+          </label>
+        </p>
+        <p>
+          <label>
+            <input id="gradient-bcg"name="group1" type="radio" />
+            <span>Linear gradient</span>
+          </label>
+        </p>
+</div>
+<div class="overlay-container">
+<label class="overlay-color" for="overlay-color">Overlay Color
+    <input id="overlay-color" type="color" name="overlay-color" value="#ffc600">
+  </label> 
+  
+  <div class="gradient-colors disabled">
+  <label for="gradient-color1">First color
+      <input id="gradient-color1" type="color" name="gradient-color1" value="#e66465">
+    </label>
+
+    <label for="gradient-color2">Second color
+        <input id="gradient-color2" type="color" name="gradient-color2" value="#9198e5">
+      </label>
+
+      <div class="input-field col s4">
+          <select id="gradient-directions">
+            <option value="to bottom right"selected>to bottom right</option>
+            <option value="to bottom">to bottom left</option>
+            <option value="to right">to right</option>
+            <option value="to left">to left</option>
+            <option value="to top">to top</option>
+            <option value="to top right">to top right</option>
+            <option value="to top left">to top left</option>
+          </select>
+          <label>Choose gradient direction</label>
+        </div>
+
+    </div>
+  
+  
+  
+  <br>
+  <label for="overlay-opacity">Overlay opacity
+    <input id="overlay-opacity" type="range" name="overlay-opacity" min="0" max="100" value="0" data-sizing="%">
+  </label> 
+</div>
+  <!-- <label for="base-opacity">Base opacity
     <input id="base" type="color" name="base" value="#ffc600">
-  </label> -->
+  </label>  -->
+ 
   <button class="reset">Reset</button>
   </div>
   <div class="content">
@@ -106,12 +180,13 @@
               <input type="text" id="photo-link" class="photo-link" name="photo-link"> </label> <button class="file-uploads__button">Go</button>
           </div>
   <div class="image-container">
-    <img id="image" src="img/dog.jpeg" alt=""/>
+    <img id="image" class="image" src="img/dog.jpeg" alt=""/>
+    <div class="layer"></div>
   </div>
 </div>
 
 <button class="button btn waves-effect waves-light" id="btn-download"><i class="material-icons left"></i>Download</button>
-
+</div>
   <script src="script.js"></script>
 </body>
 
