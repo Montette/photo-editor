@@ -105,9 +105,9 @@
 
  var button = document.getElementById('btn-download');
 
-//  button.onclick = async () => {
+ button.onclick = async () => {
 
-button.addEventListener('click', ()=>  {
+// button.addEventListener('click', ()=>  {
 
      let filters = getComputedStyle(image).getPropertyValue('filter');
      let clip = getComputedStyle(image).getPropertyValue('clip-path');
@@ -223,38 +223,39 @@ button.addEventListener('click', ()=>  {
          ctx.drawImage(image, leftIm, topIm, newRight, newBott, 0, 0, newWidth, newHeight);
      }
 
-     // let blob = await new Promise(resolve=>c.toBlob(resolve));
-     // let url = URL.createObjectURL(blob);
+     let blob = await new Promise(resolve=>c.toBlob(resolve));
+     let url = URL.createObjectURL(blob);
 
-     // window.open(url);
-     // let a = document.createElement('a');
-     // a.href = url;
-     // a.download = '';
-     // document.body.appendChild(a);
-     // a.click();
-     // document.body.removeChild(a);
+     
+     let a = document.createElement('a');
+     a.href = url;
+     a.download = 'myphoto.png';
+     document.body.appendChild(a);
+     window.open(url);
+     a.click();
+     document.body.removeChild(a);
 
-     var link = document.createElement('a');
+    //  var link = document.createElement('a');
     //  link.innerHTML = 'download image';
     //  link.addEventListener('click', function (ev) {
     //      link.href = c.toDataURL();
     //      link.download = "mypainting.png";
     //  }, false);
 
-    let url = c.toDataURL();
-    link.href = url;
-    window.open(url);
-    link.download = "myphoto.png";
-     document.body.appendChild(link);
-       link.click();
-     document.body.removeChild(link);
+    // let url = c.toDataURL();
+    // link.href = url;
+    // window.open(url);
+    // link.download = "myphoto.png";
+    //  document.body.appendChild(link);
+    //    link.click();
+    //  document.body.removeChild(link);
 
 
 
 
-//  };
+ };
 
-})
+// })
 
 
 
