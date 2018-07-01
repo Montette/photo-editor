@@ -25,6 +25,8 @@
     <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
   </label> -->
 
+  <div class="basic_controls">
+
     <label for="blur">Blur:
     <input id="blur" type="range" name="blur" min="0" max="25" value="0" data-sizing="px">
   </label>
@@ -88,34 +90,20 @@
 
             
 
+            </div>
 
 
-  <div class="input-field col s4">
-      <select id="overlay-options">
-        <option value="normal"selected>normal</option>
-        <option value="multiply">Multiply</option>
-        <option value="screen">Screen</option>
-        <option value="overlay">Overlay</option>
-        <option value="darken">darken</option>
-        <option value="lighten">lighten</option>
-        <option value="color-dodge">color-dodge</option>
-        <option value="color-burn">color-burny</option>
-        <option value="hard-light">hard-light</option>
-        <option value="soft-light">soft-light</option>
-        <option value="difference">difference</option>
-        <option value="exclusion">exclusion</option>
-        <option value="hue">hue</option>
-        <option value="saturation">saturation</option>
-        <option value="color">color</option>
-        <option value="luminosity">luminosityt</option>
-      </select>
-      <label>Choose overlay option</label>
-    </div>
+    <div class="overlay-options">
 
-    <div>
+        <p>
+            <label>
+              <input id="none-bcg"name="group1" type="radio" checked />
+              <span>None</span>
+            </label>
+          </p>
         <p>
           <label>
-            <input id="solid-bcg" name="group1" type="radio" checked />
+            <input id="solid-bcg" name="group1" type="radio" />
             <span>Solid background</span>
           </label>
         </p>
@@ -125,8 +113,9 @@
             <span>Linear gradient</span>
           </label>
         </p>
+      
 </div>
-<div class="overlay-container">
+<div class="overlay-controls disabled">
 <label class="overlay-color" for="overlay-color">Overlay Color
     <input id="overlay-color" type="color" name="overlay-color" value="#ffc600">
   </label> 
@@ -136,30 +125,61 @@
       <input id="gradient-color1" type="color" name="gradient-color1" value="#e66465">
     </label>
 
+    <label for="color1-percent">First color
+        <input id="color1-percent" type="number" name="color1-percent" min="0" max="100" value="40" data-sizing="%">
+      </label>
+
     <label for="gradient-color2">Second color
         <input id="gradient-color2" type="color" name="gradient-color2" value="#9198e5">
       </label>
 
-      <div class="input-field col s4">
-          <select id="gradient-directions">
-            <option value="to bottom right"selected>to bottom right</option>
-            <option value="to bottom">to bottom left</option>
-            <option value="to right">to right</option>
+      <label for="color2-percent">First color
+          <input id="color2-percent" type="number" name="color2-percent" min="0" max="100" value="80" data-sizing="%">
+        </label>
+      <div class="gradient-directions-wrapper input-field col s4">
+         
+          <select class="gradient-directions" id="gradient-direction">
+            <option value="to right"selected>to right</option>
             <option value="to left">to left</option>
+            <option value="to bottom">to bottom</option>
+            <option value="to bottom right">to bottom right</option>
+            <option value="to bottom left">to bottom left</option>
             <option value="to top">to top</option>
             <option value="to top right">to top right</option>
             <option value="to top left">to top left</option>
           </select>
+        
           <label>Choose gradient direction</label>
         </div>
 
     </div>
   
+    <div class="input-field col s4 overlay-options-wrapper">
+        <select class="overlay-options" id="mode">
+          <option value="normal"selected>normal</option>
+          <option value="multiply">Multiply</option>
+          <option value="screen">Screen</option>
+          <option value="overlay">Overlay</option>
+          <option value="darken">darken</option>
+          <option value="lighten">lighten</option>
+          <option value="color-dodge">color-dodge</option>
+          <option value="color-burn">color-burny</option>
+          <option value="hard-light">hard-light</option>
+          <option value="soft-light">soft-light</option>
+          <option value="difference">difference</option>
+          <option value="exclusion">exclusion</option>
+          <option value="hue">hue</option>
+          <option value="saturation">saturation</option>
+          <option value="color">color</option>
+          <option value="luminosity">luminosityt</option>
+        </select>
+        <label>Choose overlay option</label>
+      </div>
   
   
   <br>
   <label for="overlay-opacity">Overlay opacity
-    <input id="overlay-opacity" type="range" name="overlay-opacity" min="0" max="100" value="0" data-sizing="%">
+    <input id="overlay-opacity" type="range" name="overlay-opacity" min="0" max="100" value="20" data-sizing="%">
   </label> 
 </div>
   <!-- <label for="base-opacity">Base opacity
@@ -171,9 +191,24 @@
   <div class="content">
       <div class="content">
           <div class="file-uploads">
-            <label for="file">Select an image file
+            
+            
+            <!-- <label for="file">Select an image file
               <br>
-              <input type="file" id="file" class="image-input" name="file"> </label>
+              <input type="file" id="file" class="image-input" name="file"> </label> -->
+
+              <div class="file-field input-field">
+                  <div class="btn">
+                    <span>Select an image file</span>
+                    <input type="file" id="file" class="image-input" name="file">
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                  </div>
+                </div>
+
+
+
               <br>
             <label for="photo-link">Or paste URL of image
               

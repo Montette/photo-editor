@@ -6,13 +6,14 @@
 
  let imageInput = document.getElementById('file');
  let image = document.getElementById('image');
+ const layer = document.querySelector('.layer');
 
 
 
 
 
  const reset = () => {
-     document.querySelectorAll('.controls input').forEach(el => {
+     document.querySelectorAll('.basic-controls input').forEach(el => {
          el.value = 0;
          document.documentElement.style.setProperty(`--${el.name}`, `0${el.dataset.sizing}`);
      });
@@ -109,8 +110,24 @@
 
 button.addEventListener('click', ()=>  {
 
+    
      let filters = getComputedStyle(image).getPropertyValue('filter');
      let clip = getComputedStyle(image).getPropertyValue('clip-path');
+     let mode = getComputedStyle(layer).getPropertyValue('mix-blend-mode');
+     let overlayOpacity = getComputedStyle(layer).getPropertyValue('filter');
+    //  overlayOpacity = Number(overlayOpacity.match(/\d/g).join(""));
+    let overlayColor = getComputedStyle(layer).getPropertyValue('background-color');
+
+    // let gradientEl = document.querySelector('.gradient-bcg');
+    // let gradientColor = getComputedStyle(gradientEl).getPropertyValue('background');
+    // console.log(gradientColor);
+
+    let gradientColor1 = document.getElementById('gradient-color1').value;
+    let gradientColor2 = document.getElementById('gradient-color2').value;
+    let gradientStop1 = document.getElementById('color1-percent').value / 100;
+    let gradientStop2 = document.getElementById('color2-percent').value / 100;
+    console.log(gradientStop1);
+
 
 
 
@@ -193,6 +210,54 @@ button.addEventListener('click', ()=>  {
      ctx.filter = filters;
      // ctx.rotate(1.57);
 
+     let gradientDirection = document.getElementById('gradient-direction').value;
+     let gradient;
+     console.log(gradientDirection);
+
+    //  if(gradientDirection === 'to right') {
+    //   gradient =  ctx.createLinearGradient(0, 0, newWidth, 0);
+    //  } else if(gradientDirection === 'to left') {
+    //     gradient =  ctx.createLinearGradient(newWidth, 0, 0, 0);
+    //  }
+
+    if (document.getElementById('gradient-bcg').checked) {
+
+     switch(gradientDirection) {
+         case 'to right':
+            gradient =  ctx.createLinearGradient(0, 0, newWidth, 0);
+            break;
+         case 'to left':
+            gradient =  ctx.createLinearGradient(newWidth, 0, 0, 0);
+            break;
+        case 'to bottom':
+            gradient =  ctx.createLinearGradient(0, 0, 0, newHeight);
+            break;
+        case 'to top':
+            gradient =  ctx.createLinearGradient(0, newHeight, 0, 0);
+            break;
+        case 'to bottom right':
+            gradient =  ctx.createLinearGradient(0, 0, newWidth, newHeight);
+            break;
+        case 'to bottom left':
+            gradient =  ctx.createLinearGradient(newWidth, 0, 0, newHeight);
+            break;
+        case 'to top right':
+            gradient =  ctx.createLinearGradient(0, newHeight, newWidth, 0);
+            break;
+        case 'to top left':
+            gradient =  ctx.createLinearGradient(newWidth, newHeight, 0, 0);
+            break;
+
+     }
+     gradient.addColorStop(gradientStop1, gradientColor1);
+     gradient.addColorStop(gradientStop2, gradientColor2);
+    
+    
+    } else if (document.getElementById('solid-bcg').checked) {
+         gradient = overlayColor;
+     } else if (document.getElementById('none-bcg').checked) {
+        gradient = 'transparent';
+     }
 
      if (degs !== 0) {
 
@@ -202,8 +267,8 @@ button.addEventListener('click', ()=>  {
          let radians = Math.PI / 180;
          let x = newWidth / 2;
          let y = newHeight / 2;
-         ctx.clearRect(0, 0, c.width, c.height);
-         ctx.save();
+        //  ctx.clearRect(0, 0, c.width, c.height);
+        //  ctx.save();
          ctx.translate(c.width / 2, c.height / 2);
          ctx.rotate(degs * radians);
          console.log(y);
@@ -211,7 +276,9 @@ button.addEventListener('click', ()=>  {
          ctx.filter = filters;
         
          ctx.drawImage(image, leftIm, topIm, newRight, newBott, (-x), (-y), (newWidth), (newHeight));
-         ctx.restore();
+         ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
+         ctx.fillRect(-x, -y, newWidth, newHeight)
+        //  ctx.restore();
 
          // (-x/2.3), (-y/2.5)
 
@@ -224,8 +291,19 @@ button.addEventListener('click', ()=>  {
          console.log(filters);
          console.log(degs);
          ctx.filter = filters;
-         
+        
          ctx.drawImage(image, leftIm, topIm, newRight, newBott, 0, 0, newWidth, newHeight);
+
+        //  let gradient = ctx.createLinearGradient(0, 0, newWidth, 0);
+        //  gradient.addColorStop(gradientStop1, gradientColor1);
+        //  gradient.addColorStop(gradientStop2, gradientColor2);
+
+         ctx.fillStyle = gradient;
+         console.log(overlayColor);
+        //  ctx.globalAlpha = overlayOpacity;
+         ctx.globalCompositeOperation = mode;
+        ctx.filter = overlayOpacity;
+         ctx.fillRect(0, 0, newWidth, newHeight)
      }
 
     //  let blob = await new Promise(resolve=>c.toBlob(resolve));
@@ -294,28 +372,76 @@ button.addEventListener('click', ()=>  {
 
 
 
-  function changeGradient() {
-    var selector = document.getElementById('overlay-options');
-    var value = selector[selector.selectedIndex].value;
-    document.documentElement.style.setProperty('--mode', value);
-    console.log(value);
+  function changeOverlay(event) {
+    // var selector = document.getElementById('overlay-options');
+    // var value = selector[selector.selectedIndex].value;
+    // document.documentElement.style.setProperty('--mode', value);
+    // console.log(value);
+
+
+
+  
+    var overlayOptions = document.querySelector('.overlay-options');
+    let element = event.target;
+    let elementName = element.getAttribute('id');
+    console.log(elementName);
+
+
+//     let selector;
+    
+
+// if(event.target == overlayOptions) {
+
+//     elementName = 'mode';
+//     selector = overlayOptions;
+
+// }
+
+    console.log(event.target);
+    let newValue = element[element.selectedIndex].value;
+    document.documentElement.style.setProperty(`--${elementName}`, newValue);
+
+
+
 }
 
-document.getElementById('overlay-options').addEventListener('change', changeOverlay);
+document.getElementById('mode').addEventListener('change', changeOverlay);
 
-document.getElementById('gradient-directions').addEventListener('change', changeGradient);
+document.getElementById('gradient-direction').addEventListener('change', changeOverlay);
 
 document.getElementById('solid-bcg').addEventListener('click', (event)=> {
+    // let solid = getComputedStyle(document.documentElement).getPropertyValue('--overlay-color');
+    // let solid = document.getElementById('overlay-color').value;
+    // console.log(solid);
+    // document.documentElement.style.setProperty('--color', solid);
+    document.querySelector('.overlay-controls').classList.remove('disabled');
+    
+    layer.classList.remove('gradient-bcg');
+    layer.classList.add('solid-bcg');
     document.querySelector('.gradient-colors').classList.add('disabled');
     document.querySelector('.overlay-color').classList.remove('disabled');
 
 })
 
 document.getElementById('gradient-bcg').addEventListener('click', (event)=> {
+    // let gradient = getComputedStyle(document.documentElement).getPropertyValue('--gradient');
+    // document.documentElement.style.setProperty('--color', gradient);
+    document.querySelector('.overlay-controls').classList.remove('disabled');
+    
+    layer.classList.remove('solid-bcg');
+    layer.classList.add('gradient-bcg');
     document.querySelector('.overlay-color').classList.add('disabled');
     document.querySelector('.gradient-colors').classList.remove('disabled');
 })
 
+document.getElementById('none-bcg').addEventListener('click', (event)=> {
+  
+    const layer = document.querySelector('.layer');
+    layer.classList.remove('solid-bcg', 'gradient-bcg');
+    // layer.classList.rewmo('gradient-bcg');
+    document.querySelector('.overlay-controls').classList.add('disabled');
+    // document.querySelector('.overlay-container').classList.remove('disabled');
+})
 
 
  // function convertImageToCanvas(image) {

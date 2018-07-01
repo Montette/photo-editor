@@ -1,4 +1,5 @@
 :root {
+    
     --overlay-color: #ffc600;
     --gradient-color1: #e66465;
     --gradient-color2: #9198e5;
@@ -6,6 +7,7 @@
     --color2-percent: 80%;
     --gradient-direction: to right;
     --gradient: linear-gradient(var(--gradient-direction), var(--gradient-color1) var(--color1-percent), var(--gradient-color2) var(--color2-percent));
+    --color: var(--overlay-color);
     --spacing: 10px;
     --blur: 0px;
     --grayscale: 0%;
@@ -24,8 +26,8 @@
     --brightness: 100%;
     --contrast: 100%;
     --opacity: 100%;
-    --overlay-opacity: 0;
-    --mode: screen;
+    --overlay-opacity: 20%;
+    --mode: normal;
     
   }
 
@@ -94,8 +96,8 @@
 .layer {
     width: var(--width);
     height: calc(100% - 5px);
-    background-color: var(--overlay-color);
-    background: var(--gradient);
+    /* background-color: var(--overlay-color);
+    background: var(--color); */
     position: absolute;
     top: 0;
     left: 0;
@@ -107,6 +109,13 @@
     mix-blend-mode: var(--mode);
 }
 
+.solid-bcg {
+  background: var(--overlay-color);
+}
+
+.gradient-bcg {
+  background: var(--gradient);
+}
   .image {
     /* padding: var(--spacing); */
     /* background: var(--base); */
@@ -189,6 +198,21 @@
 
 
 
-  .select-wrapper input.select-dropdown {
+  /* .select-wrapper input.select-dropdown {
     width: 30%;
+  } */
+
+  .gradient-directions-wrapper {
+    display: inline-block;
+    margin-left: 30px;
+    
+
+  }
+
+  .overlay-options-wrapper {
+    width: 200px;
+  }
+
+  .gradient-colors {
+    width: 300px;
   }
