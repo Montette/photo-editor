@@ -16,7 +16,10 @@
      document.querySelectorAll('.basic-controls input').forEach(el => {
          el.value = 0;
          document.documentElement.style.setProperty(`--${el.name}`, `0${el.dataset.sizing}`);
+    
      });
+
+
      document.documentElement.style.setProperty('--width', '600px');
      document.documentElement.style.setProperty('--saturate', '100%');
      document.documentElement.style.setProperty('--opacity', '100%');
@@ -219,33 +222,34 @@ button.addEventListener('click', ()=>  {
     //  } else if(gradientDirection === 'to left') {
     //     gradient =  ctx.createLinearGradient(newWidth, 0, 0, 0);
     //  }
+    const fillOverlay = (x,y)=> {
 
     if (document.getElementById('gradient-bcg').checked) {
 
      switch(gradientDirection) {
          case 'to right':
-            gradient =  ctx.createLinearGradient(0, 0, newWidth, 0);
+            gradient =  ctx.createLinearGradient(x, y, newWidth, y);
             break;
          case 'to left':
-            gradient =  ctx.createLinearGradient(newWidth, 0, 0, 0);
+            gradient =  ctx.createLinearGradient(newWidth, y, x, y);
             break;
         case 'to bottom':
-            gradient =  ctx.createLinearGradient(0, 0, 0, newHeight);
+            gradient =  ctx.createLinearGradient(x, y, x, newHeight);
             break;
         case 'to top':
-            gradient =  ctx.createLinearGradient(0, newHeight, 0, 0);
+            gradient =  ctx.createLinearGradient(x, newHeight, x, y);
             break;
         case 'to bottom right':
-            gradient =  ctx.createLinearGradient(0, 0, newWidth, newHeight);
+            gradient =  ctx.createLinearGradient(x, y, newWidth, newHeight);
             break;
         case 'to bottom left':
-            gradient =  ctx.createLinearGradient(newWidth, 0, 0, newHeight);
+            gradient =  ctx.createLinearGradient(newWidth, y, x, newHeight);
             break;
         case 'to top right':
-            gradient =  ctx.createLinearGradient(0, newHeight, newWidth, 0);
+            gradient =  ctx.createLinearGradient(x, newHeight, newWidth, y);
             break;
         case 'to top left':
-            gradient =  ctx.createLinearGradient(newWidth, newHeight, 0, 0);
+            gradient =  ctx.createLinearGradient(newWidth, newHeight, x, y);
             break;
 
      }
@@ -259,6 +263,13 @@ button.addEventListener('click', ()=>  {
         gradient = 'transparent';
      }
 
+     
+     
+        ctx.fillStyle = gradient;
+        ctx.globalCompositeOperation = mode;
+       ctx.filter = overlayOpacity; 
+       }
+
      if (degs !== 0) {
 
          c.width = image.width * 2;
@@ -271,39 +282,35 @@ button.addEventListener('click', ()=>  {
         //  ctx.save();
          ctx.translate(c.width / 2, c.height / 2);
          ctx.rotate(degs * radians);
-         console.log(y);
-         console.log(x);
+  
          ctx.filter = filters;
         
          ctx.drawImage(image, leftIm, topIm, newRight, newBott, (-x), (-y), (newWidth), (newHeight));
-         ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
+         fillOverlay(-x, -y);
          ctx.fillRect(-x, -y, newWidth, newHeight)
         //  ctx.restore();
 
-         // (-x/2.3), (-y/2.5)
+        
 
          console.log('fff');
      } else {
 
          c.width = newWidth;
          c.height = newHeight;
-         console.log('no');
-         console.log(filters);
-         console.log(degs);
+   
          ctx.filter = filters;
         
          ctx.drawImage(image, leftIm, topIm, newRight, newBott, 0, 0, newWidth, newHeight);
 
-        //  let gradient = ctx.createLinearGradient(0, 0, newWidth, 0);
-        //  gradient.addColorStop(gradientStop1, gradientColor1);
-        //  gradient.addColorStop(gradientStop2, gradientColor2);
+  
+        // const fillOverlay = ()=> {
+        //  ctx.fillStyle = gradient;
+        //  ctx.globalCompositeOperation = mode;
+        // ctx.filter = overlayOpacity; 
+        // }
 
-         ctx.fillStyle = gradient;
-         console.log(overlayColor);
-        //  ctx.globalAlpha = overlayOpacity;
-         ctx.globalCompositeOperation = mode;
-        ctx.filter = overlayOpacity;
-         ctx.fillRect(0, 0, newWidth, newHeight)
+        fillOverlay(0,0);
+        ctx.fillRect(0, 0, newWidth, newHeight)
      }
 
     //  let blob = await new Promise(resolve=>c.toBlob(resolve));
@@ -370,6 +377,16 @@ button.addEventListener('click', ()=>  {
   
   });
 
+  
+ document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.tabs');
+    var instance = M.Tabs.init(elems);
+ 
+  
+  });
+
+
+
 
 
   function changeOverlay(event) {
@@ -410,10 +427,7 @@ document.getElementById('mode').addEventListener('change', changeOverlay);
 document.getElementById('gradient-direction').addEventListener('change', changeOverlay);
 
 document.getElementById('solid-bcg').addEventListener('click', (event)=> {
-    // let solid = getComputedStyle(document.documentElement).getPropertyValue('--overlay-color');
-    // let solid = document.getElementById('overlay-color').value;
-    // console.log(solid);
-    // document.documentElement.style.setProperty('--color', solid);
+
     document.querySelector('.overlay-controls').classList.remove('disabled');
     
     layer.classList.remove('gradient-bcg');
@@ -424,8 +438,7 @@ document.getElementById('solid-bcg').addEventListener('click', (event)=> {
 })
 
 document.getElementById('gradient-bcg').addEventListener('click', (event)=> {
-    // let gradient = getComputedStyle(document.documentElement).getPropertyValue('--gradient');
-    // document.documentElement.style.setProperty('--color', gradient);
+
     document.querySelector('.overlay-controls').classList.remove('disabled');
     
     layer.classList.remove('solid-bcg');
@@ -438,11 +451,39 @@ document.getElementById('none-bcg').addEventListener('click', (event)=> {
   
     const layer = document.querySelector('.layer');
     layer.classList.remove('solid-bcg', 'gradient-bcg');
-    // layer.classList.rewmo('gradient-bcg');
+    
     document.querySelector('.overlay-controls').classList.add('disabled');
-    // document.querySelector('.overlay-container').classList.remove('disabled');
+  
 })
 
+// var xyz = true;
+// var grrr = getComputedStyle(document.querySelector('.layer')).getPropertyValue('background');
+// var bgrr = getComputedStyle(document.querySelector('.layer')).getPropertyValue('background');
+// var gr = true;
+// var abc = `
+//   .filter::before {
+//     content: "";
+//     display: block;
+//     height: 100%;
+//     width: 100%;
+//     top: 0;
+//     left: 0;
+//     position: absolute;
+//     pointer-events: none;
+//     mix-blend-mode: darken;
+//     background: ${document.getElementById('gradient-bcg').checked? grrr:bgrr};
+//   }`
+
+// document.querySelector('.code-container').innerHTML=`
+// <pre><code>
+// .filter {
+//     position: relative;
+//     -webkit-filter: brightness(105%) hue-rotate(350deg);
+//     filter: brightness(105%) hue-rotate(350deg);
+//   }
+//   ${document.getElementById('none-bcg').checked?'':abc}
+// </code></pre>
+// `
 
  // function convertImageToCanvas(image) {
  //     var canvas = document.createElement("canvas");

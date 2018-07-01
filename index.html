@@ -3,193 +3,211 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Images Editor</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+  
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700"
   rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
+  
 </head>
 
 <body>
 
-  <div class="wrapper">
+  
+    <header class="header">
   <h1>
       <span class='hl'>JS </span>Images Editor
     
   </h1>
-
-  <div class="controls">
-    <!-- <label for="spacing">Spacing:
-    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
-  </label> -->
-
-  <div class="basic_controls">
-
-    <label for="blur">Blur:
-    <input id="blur" type="range" name="blur" min="0" max="25" value="0" data-sizing="px">
-  </label>
-
-    <label for="grayscale">Grayscale:
-    <input id="grayscale" type="range" name="grayscale" min="0" max="100" value="0" data-sizing="%">
-  </label>
-
-    <label for="sepia">Sepia:
-    <input id="sepia" type="range" name="sepia" min="0" max="100" value="0" data-sizing="%">
-  </label>
-
-    <label for="saturate">Saturate:
-    <input id="saturate" type="range" name="saturate" min="0" max="1000" value="100" data-sizing="%">
-  </label>
-
-    <label for="hue-rotate">hue-rotate:
-    <input id="hue-rotate" type="range" name="hue-rotate" min="0" max="500" value="0" data-sizing="deg">
-  </label>
-
-  <label for="invert">Invert:
-      <input id="invert" type="range" name="invert" min="0" max="200" value="0" data-sizing="%">
-    </label>
-
-    <label for="brightness">Brightness:
-        <input id="brightness" type="range" name="brightness" min="0" max="500" value="100" data-sizing="%">
-      </label>
-
-      <label for="contrast">Contrast:
-          <input id="contrast" type="range" name="contrast" min="0" max="500" value="100" data-sizing="%">
-        </label>
-
-        <label for="opacity">Opacity:
-            <input id="opacity" type="range" name="opacity" min="0" max="100" value="100" data-sizing="%">
-          </label>
-
-    <label for="width">Size:
-    <input id="width" type="range" name="width" min="0" max="1000" value="500" data-sizing="px">
-  </label>
-
-  <label for="left">Crop left:
-      <input id="left" type="range" name="left" min="0" max="1000" value="0" data-sizing="px">
-    </label>
-
-    <label for="right">Crop right:
-        <input id="right" type="range" name="right" min="0" max="1000" value="0" data-sizing="px">
-      </label>
-
-      <label for="top">Crop top:
-          <input id="top" type="range" name="top" min="0" max="1000" value="0" data-sizing="px">
-        </label>
-
-        <label for="bottom">Crop bottom:
-            <input id="bottom" type="range" name="bottom" min="0" max="1000" value="0" data-sizing="px">
-          </label>
-
-
-            <label for="rotate">Rotate:
-                <input id="rotateL" type="range" name="rotateL" min="-360" max="360" value="0" data-sizing="deg">
-              </label>
-
+</header>
+<div class="wrapper row">
+  
+    
+  <div class="controls col s4">
+      
+      <div class="tabs-container col s12">
+          <ul class="tabs">
+            <li class="tab col s6"><a class="active" href="#test1">generator</a></li>
+            <li class="tab col s6"><a  href="#test2">CSS code</a></li>
+    
+          </ul>
+        </div>
+      <div data-simplebar class="scroll-wrapper">
+          <div id= 'test1' class="layers_controls col s12">
             
 
-            </div>
+              <div class="basic-controls">
 
-
-    <div class="overlay-options">
-
-        <p>
-            <label>
-              <input id="none-bcg"name="group1" type="radio" checked />
-              <span>None</span>
-            </label>
-          </p>
-        <p>
-          <label>
-            <input id="solid-bcg" name="group1" type="radio" />
-            <span>Solid background</span>
-          </label>
-        </p>
-        <p>
-          <label>
-            <input id="gradient-bcg"name="group1" type="radio" />
-            <span>Linear gradient</span>
-          </label>
-        </p>
-      
-</div>
-<div class="overlay-controls disabled">
-<label class="overlay-color" for="overlay-color">Overlay Color
-    <input id="overlay-color" type="color" name="overlay-color" value="#ffc600">
-  </label> 
-  
-  <div class="gradient-colors disabled">
-  <label for="gradient-color1">First color
-      <input id="gradient-color1" type="color" name="gradient-color1" value="#e66465">
-    </label>
-
-    <label for="color1-percent">First color
-        <input id="color1-percent" type="number" name="color1-percent" min="0" max="100" value="40" data-sizing="%">
-      </label>
-
-    <label for="gradient-color2">Second color
-        <input id="gradient-color2" type="color" name="gradient-color2" value="#9198e5">
-      </label>
-
-      <label for="color2-percent">First color
-          <input id="color2-percent" type="number" name="color2-percent" min="0" max="100" value="80" data-sizing="%">
-        </label>
-      <div class="gradient-directions-wrapper input-field col s4">
-         
-          <select class="gradient-directions" id="gradient-direction">
-            <option value="to right"selected>to right</option>
-            <option value="to left">to left</option>
-            <option value="to bottom">to bottom</option>
-            <option value="to bottom right">to bottom right</option>
-            <option value="to bottom left">to bottom left</option>
-            <option value="to top">to top</option>
-            <option value="to top right">to top right</option>
-            <option value="to top left">to top left</option>
-          </select>
-        
-          <label>Choose gradient direction</label>
-        </div>
-
-    </div>
-  
-    <div class="input-field col s4 overlay-options-wrapper">
-        <select class="overlay-options" id="mode">
-          <option value="normal"selected>normal</option>
-          <option value="multiply">Multiply</option>
-          <option value="screen">Screen</option>
-          <option value="overlay">Overlay</option>
-          <option value="darken">darken</option>
-          <option value="lighten">lighten</option>
-          <option value="color-dodge">color-dodge</option>
-          <option value="color-burn">color-burny</option>
-          <option value="hard-light">hard-light</option>
-          <option value="soft-light">soft-light</option>
-          <option value="difference">difference</option>
-          <option value="exclusion">exclusion</option>
-          <option value="hue">hue</option>
-          <option value="saturation">saturation</option>
-          <option value="color">color</option>
-          <option value="luminosity">luminosityt</option>
-        </select>
-        <label>Choose overlay option</label>
-      </div>
-  
-  
-  <br>
-  <label for="overlay-opacity">Overlay opacity
-    <input id="overlay-opacity" type="range" name="overlay-opacity" min="0" max="100" value="20" data-sizing="%">
-  </label> 
-</div>
-  <!-- <label for="base-opacity">Base opacity
-    <input id="base" type="color" name="base" value="#ffc600">
-  </label>  -->
+                  <label for="blur">Blur:
+                  <input id="blur" type="range" name="blur" min="0" max="25" value="0" data-sizing="px">
+                </label>
+              
+                  <label for="grayscale">Grayscale:
+                  <input id="grayscale" type="range" name="grayscale" min="0" max="100" value="0" data-sizing="%">
+                </label>
+              
+                  <label for="sepia">Sepia:
+                  <input id="sepia" type="range" name="sepia" min="0" max="100" value="0" data-sizing="%">
+                </label>
+              
+                  <label for="saturate">Saturate:
+                  <input id="saturate" type="range" name="saturate" min="0" max="1000" value="100" data-sizing="%">
+                </label>
+              
+                  <label for="hue-rotate">hue-rotate:
+                  <input id="hue-rotate" type="range" name="hue-rotate" min="0" max="500" value="0" data-sizing="deg">
+                </label>
+              
+                <label for="invert">Invert:
+                    <input id="invert" type="range" name="invert" min="0" max="200" value="0" data-sizing="%">
+                  </label>
+              
+                  <label for="brightness">Brightness:
+                      <input id="brightness" type="range" name="brightness" min="0" max="500" value="100" data-sizing="%">
+                    </label>
+              
+                    <label for="contrast">Contrast:
+                        <input id="contrast" type="range" name="contrast" min="0" max="500" value="100" data-sizing="%">
+                      </label>
+              
+                      <label for="opacity">Opacity:
+                          <input id="opacity" type="range" name="opacity" min="0" max="100" value="100" data-sizing="%">
+                        </label>
+              
+                  <label for="width">Size:
+                  <input id="width" type="range" name="width" min="0" max="1000" value="500" data-sizing="px">
+                </label>
+              
+                <label for="left">Crop left:
+                    <input id="left" type="range" name="left" min="0" max="1000" value="0" data-sizing="px">
+                  </label>
+              
+                  <label for="right">Crop right:
+                      <input id="right" type="range" name="right" min="0" max="1000" value="0" data-sizing="px">
+                    </label>
+              
+                    <label for="top">Crop top:
+                        <input id="top" type="range" name="top" min="0" max="1000" value="0" data-sizing="px">
+                      </label>
+              
+                      <label for="bottom">Crop bottom:
+                          <input id="bottom" type="range" name="bottom" min="0" max="1000" value="0" data-sizing="px">
+                        </label>
+              
+              
+                          <label for="rotate">Rotate:
+                              <input id="rotateL" type="range" name="rotateL" min="-360" max="360" value="0" data-sizing="deg">
+                            </label>
+              
+                          
+              
+                          </div>
+              
+              
+                  <div class="overlay-options">
+              
+                      <p>
+                          <label>
+                            <input id="none-bcg"name="group1" type="radio" checked />
+                            <span>None</span>
+                          </label>
+                        </p>
+                      <p>
+                        <label>
+                          <input id="solid-bcg" name="group1" type="radio" />
+                          <span>Solid background</span>
+                        </label>
+                      </p>
+                      <p>
+                        <label>
+                          <input id="gradient-bcg"name="group1" type="radio" />
+                          <span>Linear gradient</span>
+                        </label>
+                      </p>
+                    
+              </div>
+              <div class="overlay-controls disabled">
+              <label class="overlay-color" for="overlay-color">Overlay Color
+                  <input id="overlay-color" type="color" name="overlay-color" value="#ffc600">
+                </label> 
+                
+                <div class="gradient-colors disabled">
+                <label for="gradient-color1">First color
+                    <input id="gradient-color1" type="color" name="gradient-color1" value="#e66465">
+                  </label>
+              
+                  <label for="color1-percent">First color
+                      <input id="color1-percent" type="number" name="color1-percent" min="0" max="100" value="40" data-sizing="%">
+                    </label>
+              
+                  <label for="gradient-color2">Second color
+                      <input id="gradient-color2" type="color" name="gradient-color2" value="#9198e5">
+                    </label>
+              
+                    <label for="color2-percent">First color
+                        <input id="color2-percent" type="number" name="color2-percent" min="0" max="100" value="80" data-sizing="%">
+                      </label>
+                    <div class="gradient-directions-wrapper input-field col s4">
+                       
+                        <select class="gradient-directions" id="gradient-direction">
+                          <option value="to right"selected>to right</option>
+                          <option value="to left">to left</option>
+                          <option value="to bottom">to bottom</option>
+                          <option value="to bottom right">to bottom right</option>
+                          <option value="to bottom left">to bottom left</option>
+                          <option value="to top">to top</option>
+                          <option value="to top right">to top right</option>
+                          <option value="to top left">to top left</option>
+                        </select>
+                      
+                        <label>Choose gradient direction</label>
+                      </div>
+              
+                  </div>
+                
+                  <div class="input-field col s4 overlay-options-wrapper">
+                      <select class="overlay-options" id="mode">
+                        <option value="normal"selected>normal</option>
+                        <option value="multiply">Multiply</option>
+                        <option value="screen">Screen</option>
+                        <option value="overlay">Overlay</option>
+                        <option value="darken">darken</option>
+                        <option value="lighten">lighten</option>
+                        <option value="color-dodge">color-dodge</option>
+                        <option value="color-burn">color-burny</option>
+                        <option value="hard-light">hard-light</option>
+                        <option value="soft-light">soft-light</option>
+                        <option value="difference">difference</option>
+                        <option value="exclusion">exclusion</option>
+                        <option value="hue">hue</option>
+                        <option value="saturation">saturation</option>
+                        <option value="color">color</option>
+                        <option value="luminosity">luminosityt</option>
+                      </select>
+                      <label>Choose overlay option</label>
+                    </div>
+                
+                
+                <br>
+                <label for="overlay-opacity">Overlay opacity
+                  <input id="overlay-opacity" type="range" name="overlay-opacity" min="0" max="100" value="20" data-sizing="%">
+                </label> 
+              </div>
+ 
  
   <button class="reset">Reset</button>
+  
+</div>
+<div id="test2" class="col s12"><p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum, impedit molestias. Adipisci eius provident eligendi exercitationem deleniti animi doloremque earum optio perspiciatis, repellendus perferendis! Voluptas debitis labore error quae in! Facere est, quae, laudantium temporibus nam officia corporis maiores exercitationem magnam ipsa blanditiis, quasi nobis omnis recusandae accusamus quaerat adipisci sit ad odio perferendis modi nihil beatae dolores. Voluptatibus, repellendus. Recusandae hic ducimus ad eos. Nesciunt, facere ex facilis dolor velit ut maxime soluta quidem placeat repellat iure quasi illo eos earum. Non fugit alias veniam molestiae quas sit vel! Suscipit earum id unde exercitationem possimus. Deleniti quia eaque doloremque obcaecati eum, eveniet suscipit minus. Commodi molestiae mollitia explicabo, esse numquam eius dolore ducimus harum neque assumenda tempore dicta quo. Excepturi provident aspernatur, similique quas commodi unde ducimus, earum consectetur ipsa rerum sit, necessitatibus consequuntur cum perferendis obcaecati reiciendis nulla error! Impedit rerum quod blanditiis nostrum voluptate vel, hic distinctio! Illo consectetur nisi ipsam placeat quod! Dignissimos neque architecto iusto dolorum laboriosam? Iste, possimus? Ab, impedit voluptas necessitatibus qui ipsa itaque consequuntur aliquam quae fuga perspiciatis beatae a aspernatur corporis. Impedit soluta ut, modi ipsam est corrupti repellendus porro vitae, architecto eum ex quisquam expedita illo ab nam minima deserunt recusandae! Earum laudantium illo blanditiis eius vel totam accusamus provident! Officiis dolorem ut fuga corrupti incidunt quae, vitae saepe? Iure, eius vitae similique delectus temporibus veniam mollitia, ullam repudiandae excepturi aliquid porro? Iste illum odit, quas excepturi rem animi laboriosam. Laudantium recusandae qui suscipit? Obcaecati excepturi libero voluptates voluptas corporis iste deserunt hic fugit deleniti est ut cum quos sunt laudantium illum veritatis animi cupiditate expedita repellat, nam repellendus voluptatem?</p><p>mollitia, ullam repudiandae excepturi aliquid porro? Iste illum odit, quas excepturi rem animi laboriosam. Laudantium recusandae qui suscipit? Obcaecati excepturi libero voluptates voluptas corporis iste deserunt hic fugit deleniti est ut cum quos sunt laudantium illum veritatis animi cupiditate expedita repellat, nam repellendus voluptatem?</p></div>
+</div>
   </div>
-  <div class="content">
-      <div class="content">
+  <main class="col s8">
+      <div class="">
           <div class="file-uploads">
             
             
@@ -218,11 +236,28 @@
     <img id="image" class="image" src="img/dog.jpeg" alt=""/>
     <div class="layer"></div>
   </div>
+  <button class="button btn waves-effect waves-light" id="btn-download"><i class="material-icons left"></i>Download</button>
 </div>
 
-<button class="button btn waves-effect waves-light" id="btn-download"><i class="material-icons left"></i>Download</button>
+
+</main>
+<!-- <div class="code-container">
+<p class="code"></p>
+</div> -->
+ 
+
 </div>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+
   <script src="script.js"></script>
+<script src="nano.js"></script>
+<script src="https://unpkg.com/simplebar@latest/dist/simplebar.js"></script>
+
 </body>
 
 </html>
