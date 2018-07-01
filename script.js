@@ -219,33 +219,34 @@ button.addEventListener('click', ()=>  {
     //  } else if(gradientDirection === 'to left') {
     //     gradient =  ctx.createLinearGradient(newWidth, 0, 0, 0);
     //  }
+    const fillOverlay = (x,y)=> {
 
     if (document.getElementById('gradient-bcg').checked) {
 
      switch(gradientDirection) {
          case 'to right':
-            gradient =  ctx.createLinearGradient(0, 0, newWidth, 0);
+            gradient =  ctx.createLinearGradient(x, y, newWidth, y);
             break;
          case 'to left':
-            gradient =  ctx.createLinearGradient(newWidth, 0, 0, 0);
+            gradient =  ctx.createLinearGradient(newWidth, y, x, y);
             break;
         case 'to bottom':
-            gradient =  ctx.createLinearGradient(0, 0, 0, newHeight);
+            gradient =  ctx.createLinearGradient(x, y, x, newHeight);
             break;
         case 'to top':
-            gradient =  ctx.createLinearGradient(0, newHeight, 0, 0);
+            gradient =  ctx.createLinearGradient(x, newHeight, x, y);
             break;
         case 'to bottom right':
-            gradient =  ctx.createLinearGradient(0, 0, newWidth, newHeight);
+            gradient =  ctx.createLinearGradient(x, y, newWidth, newHeight);
             break;
         case 'to bottom left':
-            gradient =  ctx.createLinearGradient(newWidth, 0, 0, newHeight);
+            gradient =  ctx.createLinearGradient(newWidth, y, x, newHeight);
             break;
         case 'to top right':
-            gradient =  ctx.createLinearGradient(0, newHeight, newWidth, 0);
+            gradient =  ctx.createLinearGradient(x, newHeight, newWidth, y);
             break;
         case 'to top left':
-            gradient =  ctx.createLinearGradient(newWidth, newHeight, 0, 0);
+            gradient =  ctx.createLinearGradient(newWidth, newHeight, x, y);
             break;
 
      }
@@ -259,6 +260,13 @@ button.addEventListener('click', ()=>  {
         gradient = 'transparent';
      }
 
+     
+     
+        ctx.fillStyle = gradient;
+        ctx.globalCompositeOperation = mode;
+       ctx.filter = overlayOpacity; 
+       }
+
      if (degs !== 0) {
 
          c.width = image.width * 2;
@@ -271,39 +279,35 @@ button.addEventListener('click', ()=>  {
         //  ctx.save();
          ctx.translate(c.width / 2, c.height / 2);
          ctx.rotate(degs * radians);
-         console.log(y);
-         console.log(x);
+  
          ctx.filter = filters;
         
          ctx.drawImage(image, leftIm, topIm, newRight, newBott, (-x), (-y), (newWidth), (newHeight));
-         ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
+         fillOverlay(-x, -y);
          ctx.fillRect(-x, -y, newWidth, newHeight)
         //  ctx.restore();
 
-         // (-x/2.3), (-y/2.5)
+        
 
          console.log('fff');
      } else {
 
          c.width = newWidth;
          c.height = newHeight;
-         console.log('no');
-         console.log(filters);
-         console.log(degs);
+   
          ctx.filter = filters;
         
          ctx.drawImage(image, leftIm, topIm, newRight, newBott, 0, 0, newWidth, newHeight);
 
-        //  let gradient = ctx.createLinearGradient(0, 0, newWidth, 0);
-        //  gradient.addColorStop(gradientStop1, gradientColor1);
-        //  gradient.addColorStop(gradientStop2, gradientColor2);
+  
+        // const fillOverlay = ()=> {
+        //  ctx.fillStyle = gradient;
+        //  ctx.globalCompositeOperation = mode;
+        // ctx.filter = overlayOpacity; 
+        // }
 
-         ctx.fillStyle = gradient;
-         console.log(overlayColor);
-        //  ctx.globalAlpha = overlayOpacity;
-         ctx.globalCompositeOperation = mode;
-        ctx.filter = overlayOpacity;
-         ctx.fillRect(0, 0, newWidth, newHeight)
+        fillOverlay(0,0);
+        ctx.fillRect(0, 0, newWidth, newHeight)
      }
 
     //  let blob = await new Promise(resolve=>c.toBlob(resolve));
