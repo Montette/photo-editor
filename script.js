@@ -19,6 +19,7 @@
  }
 
 
+//after loading page set proper width depending of screen size
  (function () {
     let width = getComputedStyle(image).getPropertyValue('width');
     console.log(width);
@@ -45,6 +46,7 @@ document.getElementById('controls').reset();
             document.documentElement.style.setProperty(`--${el.name}`, resetValue);
             ValueTextUpdate(el.name, resetValue);
         }
+
         //  document.documentElement.style.setProperty(`--${el.name}`, resetValue);
         //  ValueTextUpdate(el.name, resetValue);
     
