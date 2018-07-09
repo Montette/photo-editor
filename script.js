@@ -11,32 +11,64 @@
 
 
 
+ const ValueTextUpdate = (elementName, newValue) => {
+    let valuePara = document.getElementById(`${elementName}-value`);
+    if (valuePara !== null) {
+    valuePara.innerHTML = newValue;
+    }
+ }
+
+
+ (function () {
+    let width = getComputedStyle(image).getPropertyValue('width');
+    console.log(width);
+    document.querySelector('#width').value = width.slice(0, -2);
+    ValueTextUpdate('width', width);
+ })();
+
 
  const reset = () => {
+
+document.getElementById('controls').reset();
+
      document.querySelectorAll('.basic-controls input').forEach(el => {
-         el.value = 0;
-         document.documentElement.style.setProperty(`--${el.name}`, `0${el.dataset.sizing}`);
+
+      let resetValue = `0${el.dataset.sizing}`;
+
+        if(el.name == 'width') {
+            document.documentElement.style.setProperty(`--${el.name}`, '600px');
+            ValueTextUpdate(el.name, '600px');
+        } else if (el.name == 'saturate' || el.name == 'opacity' || el.name == 'brightness' || el.name == 'contrast') {
+            document.documentElement.style.setProperty(`--${el.name}`, '100%');
+            ValueTextUpdate(el.name, '100%');
+        } else {
+            document.documentElement.style.setProperty(`--${el.name}`, resetValue);
+            ValueTextUpdate(el.name, resetValue);
+        }
+        //  document.documentElement.style.setProperty(`--${el.name}`, resetValue);
+        //  ValueTextUpdate(el.name, resetValue);
     
      });
 
 
-     document.documentElement.style.setProperty('--width', '600px');
-     document.documentElement.style.setProperty('--saturate', '100%');
-     document.documentElement.style.setProperty('--opacity', '100%');
-     document.documentElement.style.setProperty('--brightness', '100%');
-     document.documentElement.style.setProperty('--contrast', '100%');
+    //  document.documentElement.style.setProperty('--width', '600px');
+    //  document.documentElement.style.setProperty('--saturate', '100%');
+    //  document.documentElement.style.setProperty('--opacity', '100%');
+    //  document.documentElement.style.setProperty('--brightness', '100%');
+    //  document.documentElement.style.setProperty('--contrast', '100%');
 
 
-     document.querySelector('#width').value = 500;
-     document.querySelector('#saturate').value = 100;
-     document.querySelector('#opacity').value = 100;
-     document.querySelector('#brightness').value = 100;
-     document.querySelector('#contrast').value = 100;
+    //  document.querySelector('#width').value = 500;
+    //  document.querySelector('#saturate').value = 100;
+    //  document.querySelector('#opacity').value = 100;
+    //  document.querySelector('#brightness').value = 100;
+    //  document.querySelector('#contrast').value = 100;
  }
 
 
  imageInput.addEventListener('change', (event) => {
      var files = event.target.files;
+     console.log("aaa");
 
 
 
@@ -72,13 +104,26 @@
 
 
 
+ 
 
 
- const inputUpdate = (event) => {
-     const suffix = event.target.dataset.sizing || '';
-     let elementName = event.target.name;
-     let newValue = event.target.value + suffix;
 
+ const inputUpdate = (event, input) => {
+
+    let element;
+    if (event == undefined) {
+        element = input;
+    } else {
+        element = event.target;
+    }
+     const suffix = element.dataset.sizing || '';
+     let elementName = element.name;
+     let newValue = element.value + suffix;
+    //  let valuePara = document.getElementById(`${elementName}-value`);
+    //  if (valuePara !== null) {
+    //  valuePara.innerHTML = newValue;
+    //  }
+    ValueTextUpdate(elementName, newValue);
      console.log(newValue);
      document.documentElement.style.setProperty(`--${elementName}`, newValue);
 
@@ -351,8 +396,17 @@ button.addEventListener('click', ()=>  {
 
 
  document.querySelector('.reset').addEventListener('click', reset);
+ 
+document.querySelector('.photo-link-label').addEventListener('click', ()=> {
+    document.querySelector('.photo-link-container').classList.add('active');
+})
 
- document.querySelector('.file-uploads__button').addEventListener('click', () => {
+document.addEventListener('click', ()=> {
+    if(event.target.closest('.photo-link-container') || event.target.closest('.photo-link-label')) return;
+    document.querySelector('.photo-link-container').classList.remove('active');
+})
+
+ document.querySelector('.photo-link__button').addEventListener('click', () => {
     // image.crossOrigin = 'anonymous';
     // image.crossOrigin = "Anonymous";
     reset();
@@ -456,6 +510,76 @@ document.getElementById('none-bcg').addEventListener('click', (event)=> {
   
 })
 
+document.querySelectorAll('.percent-color-button').forEach(button => {
+    button.addEventListener('click', event => {
+     
+        let oldValue = event.target.parentNode.firstElementChild.value;
+        let input = event.target.parentNode.firstElementChild;
+        let newValue = 0;
+        console.log(event.target.innerHTML)
+        if(event.target.innerHTML == '+') {
+            
+             newValue = parseFloat(oldValue) + 1;
+
+        } else {
+            if(oldValue > 0) {
+                 newValue = parseFloat(oldValue) - 1
+            } else {
+                newValue = 0;
+            }
+        }
+
+        event.target.parentNode.firstElementChild.value = newValue;
+        inputUpdate(undefined, input)
+    })
+})
+
+
+document.querySelector('[href="#css-code"]').addEventListener('click', ()=> {
+
+var xyz = true;
+var grrr = getComputedStyle(document.querySelector('.layer')).getPropertyValue('background');
+let background = getComputedStyle(document.querySelector('.layer')).getPropertyValue('background');
+// background = background.split(' ').slice(0, -9).join('');
+
+if(document.getElementById('gradient-bcg').checked) {
+    background = background.split(' ').slice(4, -8).join('');
+} else {
+    background = background.split(' ').slice(0, -9).join('');
+}
+var gr = true;
+
+let filters = getComputedStyle(document.querySelector('.image')).getPropertyValue('filter');
+filters = filters.split(' ').filter(e =>  !e.includes('(0)')  && !e.includes('0deg') && !e.includes('0px') && !e.includes('saturate(1)') && !e.includes('brightness(1)') && !e.includes('contrast(1)') && !e.includes('opacity(1)')).join(' ');
+
+let mode = getComputedStyle(document.querySelector('.layer')).getPropertyValue('mix-blend-mode');
+let layerFilter = getComputedStyle(document.querySelector('.layer')).getPropertyValue('filter');
+let filterProperty = filters == [] ? "" : `
+filter: ${filters};`
+let overlay = `
+  .filter::before { <span class="pre-code">
+    content: "";
+    display: block;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    mix-blend-mode: ${mode};
+    filter: ${layerFilter};
+    background: ${background};</span>
+  }`
+
+
+    document.querySelector('.code-container').innerHTML=`
+<pre>
+.filter { <span class="pre-code">
+    position: relative; ${filterProperty} </span>  
+}
+  ${document.getElementById('none-bcg').checked?'':overlay}
+ </pre>
+`
+})
 // var xyz = true;
 // var grrr = getComputedStyle(document.querySelector('.layer')).getPropertyValue('background');
 // var bgrr = getComputedStyle(document.querySelector('.layer')).getPropertyValue('background');
