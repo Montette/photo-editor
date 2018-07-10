@@ -14,7 +14,7 @@
   --sepia: 0%;
   --saturate: 100%;
   --hue-rotate: 0deg;
-  --width: 800px;
+  --width: 600px;
   --height: auto;
   --left: 0px;
   --right: 0px;
@@ -623,21 +623,13 @@ input[type=number]:focus {
   }
 }
 
-@media (max-width: 1400px) {
+/* @media (max-width: 1400px) {
 
   :root {
     --width: 600px;
   }
-/* 
-  .file-uploads {
-    margin-top: 25px;
-  }
 
-  .file-field .btn, .file-field .btn-large, .file-field .btn-small  {
-    height: 3rem;
-    line-height: 3rem;
-  } */
-}
+} */
 
 
 
