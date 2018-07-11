@@ -1,13 +1,22 @@
+var croppr = new Croppr('#croppr', {
+    onCropEnd: function(value) {
+        console.log(value.x, value.y, value.width, value.height);
+        
+      }
+  });
+ 
+ 
  const inputs = document.querySelectorAll('.controls input');
  const imgUrl = document.getElementById('photo-link');
  const imageInput = document.getElementById('file');
- const image = document.getElementById('image');
+//  const image = document.querySelector('.image');
+ const image = document.querySelector('.croppr-imageClipped');
  const layer = document.querySelector('.layer');
  const originWidth = getComputedStyle(image).getPropertyValue('width');
  const downloadButton = document.getElementById('btn-download');
 
 
-
+// document.getElementById('croppr').classList.add('image');
 
  const ValueTextUpdate = (elementName, newValue) => {
     let valuePara = document.getElementById(`${elementName}-value`);
@@ -96,7 +105,7 @@ document.getElementById('controls').reset();
 
     
      let filters = getComputedStyle(image).getPropertyValue('filter');
-     let clip = getComputedStyle(image).getPropertyValue('clip-path');
+    //  let clip = getComputedStyle(image).getPropertyValue('clip-path');
      let mode = getComputedStyle(layer).getPropertyValue('mix-blend-mode');
      let overlayOpacity = getComputedStyle(layer).getPropertyValue('filter');
     let overlayColor = getComputedStyle(layer).getPropertyValue('background-color');
@@ -119,10 +128,24 @@ document.getElementById('controls').reset();
      ctx.width = image.width;
      ctx.height = image.height;
 
-     clip = clip.match(/\d+/g).map(Number);
+    //  clip = clip.match(/\d+/g).map(Number);
 
-     let [top, right, bottom, left] = clip;
+    let clip = getComputedStyle(image).getPropertyValue('clip');
+    clip = clip.match(/\d+/g).map(Number);
+    console.log(clip);
+    console.log(width);
+    console.log(height);
+        let top = clip[0];
+        let right = width - clip[1];
+        let bottom = height - clip[2];
+        let left = clip[3];
+
+    //  let [top, right, bottom, left] = clip;
      clip.length = 4;
+
+     console.log(top);
+     console.log(right);
+     console.log(left);
 
      if (top == undefined) {
          top = 0;
@@ -158,6 +181,7 @@ document.getElementById('controls').reset();
      let newRight = image.naturalWidth - leftIm - rightIm;
      let newBott = image.naturalHeight - topIm - bottomIm;
      ctx.filter = filters;
+     console.log(filters);
      let gradientDirection = document.getElementById('gradient-direction').value;
      let gradient;
      console.log(gradientDirection);
@@ -221,6 +245,8 @@ document.getElementById('controls').reset();
      } else {
          c.width = newWidth;
          c.height = newHeight;  
+         console.log(newHeight);
+         console.log(newWidth);
          ctx.filter = filters;     
          ctx.drawImage(image, leftIm, topIm, newRight, newBott, 0, 0, newWidth, newHeight);
         fillOverlay(0,0);
@@ -377,3 +403,22 @@ document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.tabs');
     var instance = M.Tabs.init(elems);
   });
+
+
+
+  var value = croppr.getValue();
+
+document.querySelector('.cropButton').addEventListener('click', ()=> {
+    // document.documentElement.style.setProperty(`--top`, '80px');
+    // const b= getComputedStyle(document.querySelector('.croppr-imageClipped')).getPropertyValue('clip');
+    // console.log(b);
+    // document.querySelector('.croppr-image').style.clip = b;
+    document.querySelector('.croppr-region').classList.toggle('disabled');
+    // document.querySelectorAll('.croppr-handleContainer > div').forEach(el => {
+    //     el.classList.toggle('disabled');
+    // })
+
+    document.querySelector('.croppr-handleContainer').classList.toggle('disabled');
+   
+})
+
