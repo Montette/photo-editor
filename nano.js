@@ -592,6 +592,7 @@ var CropprCore = function () {
       this.imageEl.setAttribute('src', targetEl.getAttribute('src'));
       this.imageEl.setAttribute('alt', targetEl.getAttribute('alt'));
       this.imageEl.className = 'croppr-image';
+      this.imageEl.classList.add('invisible');
       this.imageClippedEl = this.imageEl.cloneNode();
       this.imageClippedEl.className = 'croppr-imageClipped';
       this.regionEl = document.createElement('div');
@@ -599,6 +600,7 @@ var CropprCore = function () {
       this.regionEl.classList.add('disabled');
       this.overlayEl = document.createElement('div');
       this.overlayEl.className = 'croppr-overlay';
+      this.overlayEl.classList.add('invisible');
       var handleContainerEl = document.createElement('div');
       handleContainerEl.className = 'croppr-handleContainer';
       handleContainerEl.classList.add('disabled');

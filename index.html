@@ -96,13 +96,14 @@
                   </label>
                   <input id="width" type="range" name="width" min="0" max="1000" value="600" data-sizing="px">
                 </div>
-                <div class="slider-wrapper">
+          
+                <!-- <div class="slider-wrapper">
                   <label class="slider-label" for="left">Crop left:
                     <p id="left-value" class="layer-value">0px</p>
                   </label>
                   <input id="left" type="range" name="left" min="0" max="1000" value="0" data-sizing="px">
-              </div>
-                <div class="slider-wrapper">
+              </div> -->
+                <!-- <div class="slider-wrapper">
                   <label class="slider-label" for="right">Crop right:
                     <p id="right-value" class="layer-value">0px</p>
                   </label>
@@ -119,12 +120,27 @@
                     <p id="bottom-value" class="layer-value">0px</p>
                   </label>
                   <input id="bottom" type="range" name="bottom" min="0" max="1000" value="0" data-sizing="px">
-                </div>
+                </div> -->
                 <div class="slider-wrapper">
                   <label class="slider-label" for="rotateL">Rotate:
                     <p id="rotateL-value" class="layer-value">0deg</p>
                   </label>
                   <input id="rotateL" type="range" name="rotateL" min="-360" max="360" value="0" data-sizing="deg">
+                </div>
+                <div class="slider-wrapper switch-wrapper">
+                    <p class="">Cropping image
+                       
+                    </p>
+                  <div class="switch">
+                      
+                    <label>
+                      Off
+                      <input class="cropButton" type="checkbox">
+                      <span class="lever"></span>
+                      On
+                    </label>
+                  </div>
+
                 </div>
             </form>
             <button class="reset btn-small waves-effect waves-light">Clear all</button>
@@ -257,7 +273,7 @@
         </div>
         <button class="button download-button btn waves-effect waves-light" id="btn-download">
           Download</button>
-          <button class="cropButton">Crop</button>
+          <!-- <button class="cropButton">Crop</button> -->
       </div>
     </main>
   </div>

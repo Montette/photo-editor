@@ -13,6 +13,8 @@ var croppr = new Croppr('#croppr', {
  const image = document.querySelector('.croppr-imageClipped');
  const layer = document.querySelector('.layer');
  const originWidth = getComputedStyle(image).getPropertyValue('width');
+ 
+
  const downloadButton = document.getElementById('btn-download');
 
 
@@ -26,12 +28,37 @@ var croppr = new Croppr('#croppr', {
  }
 
 
-//after loading page set proper width depending of screen size
+
+
+ const setCropHandlesPosition = () => {
+    document.querySelector('.croppr-handle').style.transform = `translate(-5px, -5px)`;
+    document.querySelector('.croppr-handle:nth-child(2)').style.transform = `translate(${image.clientWidth/2}px, -5px)`;
+    document.querySelector('.croppr-handle:nth-child(3)').style.transform = `translate(${image.clientWidth - 5}px, -5px)`;
+    document.querySelector('.croppr-handle:nth-child(4)').style.transform = `translate(${image.clientWidth - 5}px, ${image.clientHeight/2}px)`;
+    document.querySelector('.croppr-handle:nth-child(5)').style.transform = `translate(${image.clientWidth - 5}px, ${image.clientHeight - 5}px)`;
+    document.querySelector('.croppr-handle:nth-child(6)').style.transform = `translate(${image.clientWidth/2}px, ${image.clientHeight - 5}px)`;
+    document.querySelector('.croppr-handle:nth-child(7)').style.transform = `translate(-5px, ${image.clientHeight - 5}px)`;
+    document.querySelector('.croppr-handle:nth-child(8)').style.transform = `translate(-5px, ${image.clientHeight/2 - 5}px)`;
+    console.log('ooop');
+ }
+
+ //after loading page set proper width depending of screen size
  (function () {
     document.querySelector('#width').value = originWidth.slice(0, -2);
     ValueTextUpdate('width', originWidth);
+    setCropHandlesPosition();
  })();
 
+ const updateDimensions = ()=> {
+    let actualImage = document.querySelector('.croppr-image');
+    document.querySelector('.croppr-imageClipped').style.clip = `rect(0px, ${actualImage.clientWidth}px, ${actualImage.clientHeight}px, 0px`;
+    document.querySelector('.layer').style.clip = `rect(0px, ${actualImage.clientWidth}px, ${actualImage.clientHeight}px, 0px`;
+        document.querySelector('.croppr-region').style.width = `${actualImage.clientWidth}px`;
+        document.querySelector('.croppr-region').style.height = `${actualImage.clientHeight}px`;
+        document.querySelector('.croppr-region').style.transform = `translate(0px, 0px)`;
+   
+
+ }
 
  const reset = () => {
 
@@ -51,6 +78,41 @@ document.getElementById('controls').reset();
     
      });
 
+     let yu = getComputedStyle(document.querySelector('.image-container')).getPropertyValue('height');
+     console.log(yu);
+    //  let actualImage = document.querySelector('.croppr-image');
+     let yuu = getComputedStyle(document.documentElement).getPropertyValue('--height');
+     console.log(yu);
+      
+  
+
+    //  document.querySelector('.croppr-imageClipped').style.clip = `rect(0px, ${actualImage.clientWidth}px, ${actualImage.clientHeight}px, 0px`;
+    //  document.querySelector('.layer').style.clip = `rect(0px, ${actualImage.clientWidth}px, ${actualImage.clientHeight}px, 0px`;
+    //      document.querySelector('.croppr-region').style.width = `${actualImage.clientWidth}px`;
+    //      document.querySelector('.croppr-region').style.height = `${actualImage.clientHeight}px`;
+    //      document.querySelector('.croppr-region').style.transform = `translate(0px, 0px)`;
+    
+
+     updateDimensions();
+         document.querySelector('.croppr-image').classList.add('invisible');
+         document.querySelector('.croppr-overlay').classList.add('invisible');
+             document.querySelector('.croppr-handleContainer').classList.add('disabled');
+         document.querySelector('.croppr-region').classList.add('disabled');
+
+     setCropHandlesPosition();
+
+    //  document.querySelector('.croppr-handle').style.transform = `translate(-5px, -5px)`;
+    //  document.querySelector('.croppr-handle:nth-child(2)').style.transform = `translate(${image.clientWidth/2}px, -5px)`;
+    //  document.querySelector('.croppr-handle:nth-child(3)').style.transform = `translate(${image.clientWidth - 5}px, -5px)`;
+    //  document.querySelector('.croppr-handle:nth-child(4)').style.transform = `translate(${image.clientWidth - 5}px, ${image.clientHeight/2}px)`;
+    //  document.querySelector('.croppr-handle:nth-child(5)').style.transform = `translate(${image.clientWidth - 5}px, ${image.clientHeight - 5}px)`;
+    //  document.querySelector('.croppr-handle:nth-child(6)').style.transform = `translate(${image.clientWidth/2}px, ${image.clientHeight - 5}px)`;
+    //  document.querySelector('.croppr-handle:nth-child(7)').style.transform = `translate(-5px, ${image.clientHeight - 5}px)`;
+    //  document.querySelector('.croppr-handle:nth-child(8)').style.transform = `translate(-5px, ${image.clientHeight/2 - 5}px)`;
+
+    console.log(image.clientWidth);
+    console.log(image.clientHeight)
+
  }
 
 
@@ -64,15 +126,35 @@ document.getElementById('controls').reset();
              let reader = new FileReader();
              reader.addEventListener('load', (event) => {
                 image.src = event.target.result;
+                document.querySelector('.croppr-image').src = event.target.result;
+                // if (document.querySelector('.croppr-image').clientHeight > 700)    {
+                //     document.documentElement.style.setProperty('--width', '600px');
+                //     console.log(document.querySelector('.croppr-image').clientHeight);
+                // }
+                image.addEventListener('load', ()=> {
+
+                
+                let newHeight = document.querySelector('.croppr-image').clientHeight;
+                let comph = getComputedStyle(document.querySelector('.croppr-image')).getPropertyValue('height');
+
+           
+
+                reset();
+     
+            })
              })
-             reset();
+             
              reader.readAsDataURL(selectedFile);
+   
+  
          } else {
              alert("Bad extension of file")
          }
      } else {
          alert("The File APIs are not fully supported in this browser.")
      }
+
+    //  reset();
  })
 
 
@@ -90,6 +172,15 @@ document.getElementById('controls').reset();
     ValueTextUpdate(elementName, newValue);
      document.documentElement.style.setProperty(`--${elementName}`, newValue);
      let filters = getComputedStyle(image).getPropertyValue('filter');
+     if(elementName == 'width') {
+        // document.querySelector('.croppr-region').style.width = `${document.querySelector('.croppr-image').clientWidth}px`;
+        // document.querySelector('.croppr-region').style.height = `${document.querySelector('.croppr-image').clientHeight}px`;
+        // document.querySelector('.croppr-region').style.transform = `translate(0px, 0px)`;
+        // setCropHandlesPosition();
+
+        updateDimensions();
+        setCropHandlesPosition();
+     }
   
  }
 
@@ -409,16 +500,16 @@ document.addEventListener('DOMContentLoaded', function() {
   var value = croppr.getValue();
 
 document.querySelector('.cropButton').addEventListener('click', ()=> {
+   
     // document.documentElement.style.setProperty(`--top`, '80px');
     // const b= getComputedStyle(document.querySelector('.croppr-imageClipped')).getPropertyValue('clip');
     // console.log(b);
     // document.querySelector('.croppr-image').style.clip = b;
     document.querySelector('.croppr-region').classList.toggle('disabled');
-    // document.querySelectorAll('.croppr-handleContainer > div').forEach(el => {
-    //     el.classList.toggle('disabled');
-    // })
-
+document.querySelector('.croppr-image').classList.toggle('invisible');
+document.querySelector('.croppr-overlay').classList.toggle('invisible');
     document.querySelector('.croppr-handleContainer').classList.toggle('disabled');
+
    
 })
 
