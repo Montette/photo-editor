@@ -1179,7 +1179,6 @@ var Croppr$1 = function (_CropprCore) {
   }]);
   return Croppr;
 }(CropprCore);
-console.log('aaa')
 return Croppr$1;
 
 })));

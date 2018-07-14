@@ -310,12 +310,14 @@ const turnOnCropping = () => {
 
 const loadURLImage = () => {
     console.log('aaabbbb');
-    reset();
     if (imgUrl.value == '') {
         return
     } else {
         clippedImage.src = imgUrl.value;
-
+        originImage.src = imgUrl.value;
+        clippedImage.addEventListener('load', () => {
+            reset();
+        })
     }
 }
 
@@ -371,7 +373,6 @@ document.getElementById('mode').addEventListener('change', changeOverlay);
 document.getElementById('gradient-direction').addEventListener('change', changeOverlay);
 
 document.addEventListener('click', (event) => {
-    console.log(event.target);
     if (event.target.matches('.photo-link-label')) {
         document.querySelector('.photo-link-container').classList.add('active');
     } else if (event.target.matches('.link-icon')) {

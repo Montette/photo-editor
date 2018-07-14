@@ -37,7 +37,7 @@ gulp.task('browserSync', function () {
     .pipe(cache(imagemin({
       interlaced: true
      })))
-    .pipe(gulp.dest('dist/images'))
+    .pipe(gulp.dest('dist/img'))
   });
 
   // gulp.task('fonts', function () {
