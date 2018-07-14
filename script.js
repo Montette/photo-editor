@@ -1,24 +1,35 @@
+
+//init croppr plugin
+
 var croppr = new Croppr('#croppr', {
     onCropEnd: function(value) {
         console.log(value.x, value.y, value.width, value.height);
         
       }
   });
+
+  var value = croppr.getValue();
  
  
  const inputs = document.querySelectorAll('.controls input');
  const imgUrl = document.getElementById('photo-link');
  const imageInput = document.getElementById('file');
-//  const image = document.querySelector('.image');
- const image = document.querySelector('.croppr-imageClipped');
+ const clippedImage = document.querySelector('.croppr-imageClipped');
+ const originImage = document.querySelector('.croppr-image');
  const layer = document.querySelector('.layer');
- const originWidth = getComputedStyle(image).getPropertyValue('width');
+ const originWidth = getComputedStyle(clippedImage).getPropertyValue('width');
+ const downloadButton = document.getElementById('btn-download');
+ const croppedRegion = document.querySelector('.croppr-region');
+ const croppedOverlay = document.querySelector('.croppr-overlay');
+ const croppedHandleContainer = document.querySelector('.croppr-handleContainer');
+ const croppingButton = document.querySelector('.cropButton');
+
+
+
  
 
- const downloadButton = document.getElementById('btn-download');
 
 
-// document.getElementById('croppr').classList.add('image');
 
  const ValueTextUpdate = (elementName, newValue) => {
     let valuePara = document.getElementById(`${elementName}-value`);
@@ -29,39 +40,37 @@ var croppr = new Croppr('#croppr', {
 
 
 
-
  const setCropHandlesPosition = () => {
     document.querySelector('.croppr-handle').style.transform = `translate(-5px, -5px)`;
-    document.querySelector('.croppr-handle:nth-child(2)').style.transform = `translate(${image.clientWidth/2}px, -5px)`;
-    document.querySelector('.croppr-handle:nth-child(3)').style.transform = `translate(${image.clientWidth - 5}px, -5px)`;
-    document.querySelector('.croppr-handle:nth-child(4)').style.transform = `translate(${image.clientWidth - 5}px, ${image.clientHeight/2}px)`;
-    document.querySelector('.croppr-handle:nth-child(5)').style.transform = `translate(${image.clientWidth - 5}px, ${image.clientHeight - 5}px)`;
-    document.querySelector('.croppr-handle:nth-child(6)').style.transform = `translate(${image.clientWidth/2}px, ${image.clientHeight - 5}px)`;
-    document.querySelector('.croppr-handle:nth-child(7)').style.transform = `translate(-5px, ${image.clientHeight - 5}px)`;
-    document.querySelector('.croppr-handle:nth-child(8)').style.transform = `translate(-5px, ${image.clientHeight/2 - 5}px)`;
-    console.log('ooop');
+    document.querySelector('.croppr-handle:nth-child(2)').style.transform = `translate(${clippedImage.clientWidth/2}px, -5px)`;
+    document.querySelector('.croppr-handle:nth-child(3)').style.transform = `translate(${clippedImage.clientWidth - 5}px, -5px)`;
+    document.querySelector('.croppr-handle:nth-child(4)').style.transform = `translate(${clippedImage.clientWidth - 5}px, ${clippedImage.clientHeight/2}px)`;
+    document.querySelector('.croppr-handle:nth-child(5)').style.transform = `translate(${clippedImage.clientWidth - 5}px, ${clippedImage.clientHeight - 5}px)`;
+    document.querySelector('.croppr-handle:nth-child(6)').style.transform = `translate(${clippedImage.clientWidth/2}px, ${clippedImage.clientHeight - 5}px)`;
+    document.querySelector('.croppr-handle:nth-child(7)').style.transform = `translate(-5px, ${clippedImage.clientHeight - 5}px)`;
+    document.querySelector('.croppr-handle:nth-child(8)').style.transform = `translate(-5px, ${clippedImage.clientHeight/2 - 5}px)`;
  }
 
- //after loading page set proper width depending of screen size
+
+ //after loading page set proper width in input depending of screen size and set position of crop handles
  (function () {
     document.querySelector('#width').value = originWidth.slice(0, -2);
     ValueTextUpdate('width', originWidth);
     setCropHandlesPosition();
  })();
 
- const updateDimensions = ()=> {
-    let actualImage = document.querySelector('.croppr-image');
-    document.querySelector('.croppr-imageClipped').style.clip = `rect(0px, ${actualImage.clientWidth}px, ${actualImage.clientHeight}px, 0px`;
-    document.querySelector('.layer').style.clip = `rect(0px, ${actualImage.clientWidth}px, ${actualImage.clientHeight}px, 0px`;
-        document.querySelector('.croppr-region').style.width = `${actualImage.clientWidth}px`;
-        document.querySelector('.croppr-region').style.height = `${actualImage.clientHeight}px`;
-        document.querySelector('.croppr-region').style.transform = `translate(0px, 0px)`;
-   
 
+
+ const updateDimensions = ()=> {
+    clippedImage.style.clip = `rect(0px, ${clippedImage.clientWidth}px, ${clippedImage.clientHeight}px, 0px`;
+    layer.style.clip = `rect(0px, ${clippedImage.clientWidth}px, ${clippedImage.clientHeight}px, 0px`;
+        croppedRegion.style.width = `${clippedImage.clientWidth}px`;
+        croppedRegion.style.height = `${clippedImage.clientHeight}px`;
+        croppedRegion.style.transform = `translate(0px, 0px)`; 
  }
 
- const reset = () => {
 
+ const reset = () => {
 document.getElementById('controls').reset();
      document.querySelectorAll('.basic-controls input').forEach(el => {
       let resetValue = `0${el.dataset.sizing}`;
@@ -74,46 +83,24 @@ document.getElementById('controls').reset();
         } else {
             document.documentElement.style.setProperty(`--${el.name}`, resetValue);
             ValueTextUpdate(el.name, resetValue);
-        }
-    
+        } 
      });
 
-     let yu = getComputedStyle(document.querySelector('.image-container')).getPropertyValue('height');
-     console.log(yu);
-    //  let actualImage = document.querySelector('.croppr-image');
-     let yuu = getComputedStyle(document.documentElement).getPropertyValue('--height');
-     console.log(yu);
-      
-  
-
-    //  document.querySelector('.croppr-imageClipped').style.clip = `rect(0px, ${actualImage.clientWidth}px, ${actualImage.clientHeight}px, 0px`;
-    //  document.querySelector('.layer').style.clip = `rect(0px, ${actualImage.clientWidth}px, ${actualImage.clientHeight}px, 0px`;
-    //      document.querySelector('.croppr-region').style.width = `${actualImage.clientWidth}px`;
-    //      document.querySelector('.croppr-region').style.height = `${actualImage.clientHeight}px`;
-    //      document.querySelector('.croppr-region').style.transform = `translate(0px, 0px)`;
-    
-
      updateDimensions();
-         document.querySelector('.croppr-image').classList.add('invisible');
-         document.querySelector('.croppr-overlay').classList.add('invisible');
-             document.querySelector('.croppr-handleContainer').classList.add('disabled');
-         document.querySelector('.croppr-region').classList.add('disabled');
-
+     originImage.classList.add('invisible');
+     croppedOverlay.classList.add('invisible');
+     croppedHandleContainer.classList.add('disabled');
+     croppedRegion.classList.add('disabled');
      setCropHandlesPosition();
-
-    //  document.querySelector('.croppr-handle').style.transform = `translate(-5px, -5px)`;
-    //  document.querySelector('.croppr-handle:nth-child(2)').style.transform = `translate(${image.clientWidth/2}px, -5px)`;
-    //  document.querySelector('.croppr-handle:nth-child(3)').style.transform = `translate(${image.clientWidth - 5}px, -5px)`;
-    //  document.querySelector('.croppr-handle:nth-child(4)').style.transform = `translate(${image.clientWidth - 5}px, ${image.clientHeight/2}px)`;
-    //  document.querySelector('.croppr-handle:nth-child(5)').style.transform = `translate(${image.clientWidth - 5}px, ${image.clientHeight - 5}px)`;
-    //  document.querySelector('.croppr-handle:nth-child(6)').style.transform = `translate(${image.clientWidth/2}px, ${image.clientHeight - 5}px)`;
-    //  document.querySelector('.croppr-handle:nth-child(7)').style.transform = `translate(-5px, ${image.clientHeight - 5}px)`;
-    //  document.querySelector('.croppr-handle:nth-child(8)').style.transform = `translate(-5px, ${image.clientHeight/2 - 5}px)`;
-
-    console.log(image.clientWidth);
-    console.log(image.clientHeight)
-
  }
+
+ const changeOverlay = (event) => {
+    let overlayOptions = document.querySelector('.overlay-options');
+    let element = event.target;
+    let elementName = element.getAttribute('id');
+    let newValue = element[element.selectedIndex].value;
+    document.documentElement.style.setProperty(`--${elementName}`, newValue);
+}
 
 
  imageInput.addEventListener('change', (event) => {
@@ -125,36 +112,19 @@ document.getElementById('controls').reset();
          if (selectedFile && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) {
              let reader = new FileReader();
              reader.addEventListener('load', (event) => {
-                image.src = event.target.result;
-                document.querySelector('.croppr-image').src = event.target.result;
-                // if (document.querySelector('.croppr-image').clientHeight > 700)    {
-                //     document.documentElement.style.setProperty('--width', '600px');
-                //     console.log(document.querySelector('.croppr-image').clientHeight);
-                // }
-                image.addEventListener('load', ()=> {
-
-                
-                let newHeight = document.querySelector('.croppr-image').clientHeight;
-                let comph = getComputedStyle(document.querySelector('.croppr-image')).getPropertyValue('height');
-
-           
-
+                clippedImage.src = event.target.result;
+                originImage.src = event.target.result;
+                clippedImage.addEventListener('load', ()=> {
                 reset();
-     
             })
-             })
-             
+             })     
              reader.readAsDataURL(selectedFile);
-   
-  
          } else {
              alert("Bad extension of file")
          }
      } else {
          alert("The File APIs are not fully supported in this browser.")
      }
-
-    //  reset();
  })
 
 
@@ -171,18 +141,13 @@ document.getElementById('controls').reset();
      let newValue = element.value + suffix;
     ValueTextUpdate(elementName, newValue);
      document.documentElement.style.setProperty(`--${elementName}`, newValue);
-     let filters = getComputedStyle(image).getPropertyValue('filter');
+     let filters = getComputedStyle(clippedImage).getPropertyValue('filter');
      if(elementName == 'width') {
-        // document.querySelector('.croppr-region').style.width = `${document.querySelector('.croppr-image').clientWidth}px`;
-        // document.querySelector('.croppr-region').style.height = `${document.querySelector('.croppr-image').clientHeight}px`;
-        // document.querySelector('.croppr-region').style.transform = `translate(0px, 0px)`;
-        // setCropHandlesPosition();
-
         updateDimensions();
         setCropHandlesPosition();
      }
-  
  }
+
 
  inputs.forEach(element => {
      element.addEventListener('change', inputUpdate);
@@ -195,48 +160,32 @@ document.getElementById('controls').reset();
     downloadButton.addEventListener('click', ()=>  {
 
     
-     let filters = getComputedStyle(image).getPropertyValue('filter');
-    //  let clip = getComputedStyle(image).getPropertyValue('clip-path');
+     let filters = getComputedStyle(clippedImage).getPropertyValue('filter');
      let mode = getComputedStyle(layer).getPropertyValue('mix-blend-mode');
      let overlayOpacity = getComputedStyle(layer).getPropertyValue('filter');
     let overlayColor = getComputedStyle(layer).getPropertyValue('background-color');
-
-
     let gradientColor1 = document.getElementById('gradient-color1').value;
     let gradientColor2 = document.getElementById('gradient-color2').value;
     let gradientStop1 = document.getElementById('color1-percent').value / 100;
     let gradientStop2 = document.getElementById('color2-percent').value / 100;
 
-     var c = document.createElement('canvas');
-     var ctx = c.getContext('2d');
-     c.width = image.width;
-     c.height = image.height;
-     var width = image.width;
-     var height = image.height;
-     console.log(width);
-     console.log(height);
+     let c = document.createElement('canvas');
+     let ctx = c.getContext('2d');
+     c.width = clippedImage.width;
+     c.height = clippedImage.height;
+     let width = clippedImage.width;
+     let height = clippedImage.height;
      ctx.filter = filters;
-     ctx.width = image.width;
-     ctx.height = image.height;
+     ctx.width = clippedImage.width;
+     ctx.height = clippedImage.height;
 
-    //  clip = clip.match(/\d+/g).map(Number);
-
-    let clip = getComputedStyle(image).getPropertyValue('clip');
+    let clip = getComputedStyle(clippedImage).getPropertyValue('clip');
     clip = clip.match(/\d+/g).map(Number);
-    console.log(clip);
-    console.log(width);
-    console.log(height);
         let top = clip[0];
         let right = width - clip[1];
         let bottom = height - clip[2];
         let left = clip[3];
-
-    //  let [top, right, bottom, left] = clip;
      clip.length = 4;
-
-     console.log(top);
-     console.log(right);
-     console.log(left);
 
      if (top == undefined) {
          top = 0;
@@ -251,13 +200,11 @@ document.getElementById('controls').reset();
          left = 0;
      }
 
-     console.log(clip);
-     console.log(image.naturalWidth);
 
-     let leftIm = image.naturalWidth * left / width;
-     let rightIm = image.naturalWidth * right / width;
-     let topIm = image.naturalHeight * top / height;
-     let bottomIm = image.naturalHeight * bottom / height;
+     let leftIm = clippedImage.naturalWidth * left / width;
+     let rightIm = clippedImage.naturalWidth * right / width;
+     let topIm = clippedImage.naturalHeight * top / height;
+     let bottomIm = clippedImage.naturalHeight * bottom / height;
      let newWidth = width - (right + left);
      let newHeight = height - (top + bottom);
      let degs = getComputedStyle(document.documentElement).getPropertyValue('--rotateL');
@@ -269,13 +216,11 @@ document.getElementById('controls').reset();
          degs = Number(degs.match(/\d/g).join(""));
      }
 
-     let newRight = image.naturalWidth - leftIm - rightIm;
-     let newBott = image.naturalHeight - topIm - bottomIm;
+     let newRight = clippedImage.naturalWidth - leftIm - rightIm;
+     let newBott = clippedImage.naturalHeight - topIm - bottomIm;
      ctx.filter = filters;
-     console.log(filters);
      let gradientDirection = document.getElementById('gradient-direction').value;
      let gradient;
-     console.log(gradientDirection);
     const fillOverlay = (x,y)=> {
 
     if (document.getElementById('gradient-bcg').checked) {
@@ -321,30 +266,29 @@ document.getElementById('controls').reset();
        }
 
      if (degs !== 0) {
-         c.width = image.width * 2;
-         c.height = image.height * 2;
+         c.width = clippedImage.width * 2;
+         c.height = clippedImage.height * 2;
          let radians = Math.PI / 180;
          let x = newWidth / 2;
          let y = newHeight / 2;
          ctx.translate(c.width / 2, c.height / 2);
          ctx.rotate(degs * radians);
          ctx.filter = filters;  
-         ctx.drawImage(image, leftIm, topIm, newRight, newBott, (-x), (-y), (newWidth), (newHeight));
+         ctx.drawImage(clippedImage, leftIm, topIm, newRight, newBott, (-x), (-y), (newWidth), (newHeight));
          fillOverlay(-x, -y);
          ctx.fillRect(-x, -y, newWidth, newHeight)
-
      } else {
          c.width = newWidth;
          c.height = newHeight;  
          console.log(newHeight);
          console.log(newWidth);
          ctx.filter = filters;     
-         ctx.drawImage(image, leftIm, topIm, newRight, newBott, 0, 0, newWidth, newHeight);
+         ctx.drawImage(clippedImage, leftIm, topIm, newRight, newBott, 0, 0, newWidth, newHeight);
         fillOverlay(0,0);
         ctx.fillRect(0, 0, newWidth, newHeight)
      }
 
-     let link = document.createElement('a');
+    let link = document.createElement('a');
     let url = c.toDataURL();
     link.href = url;
     link.download = "myphoto.png";
@@ -371,11 +315,10 @@ document.addEventListener('click', ()=> {
  document.querySelector('.photo-link__button').addEventListener('click', () => {
 
     reset();
-console.log(imgUrl.value);
 if(imgUrl.value == '')  {
     return 
 } else {
-     image.src = imgUrl.value;
+    clippedImage.src = imgUrl.value;
 }
 
      
@@ -386,37 +329,49 @@ if(imgUrl.value == '')  {
 
 
 
-  function changeOverlay(event) {
-    var overlayOptions = document.querySelector('.overlay-options');
-    let element = event.target;
-    let elementName = element.getAttribute('id');
-    let newValue = element[element.selectedIndex].value;
-    document.documentElement.style.setProperty(`--${elementName}`, newValue);
-}
+
 
 document.getElementById('mode').addEventListener('change', changeOverlay);
 
 document.getElementById('gradient-direction').addEventListener('change', changeOverlay);
 
-document.getElementById('solid-bcg').addEventListener('click', (event)=> {
+
+
+
+const changeBackground = (active, inactive, activeColors, inactiveColors)=> {
     document.querySelector('.overlay-controls').classList.remove('disabled');  
-    layer.classList.remove('gradient-bcg');
-    layer.classList.add('solid-bcg');
-    document.querySelector('.gradient-colors').classList.add('disabled');
-    document.querySelector('.overlay-color').classList.remove('disabled');
+    layer.classList.remove(inactive);
+    layer.classList.add(active);
+    document.querySelector(inactiveColors).classList.add('disabled');
+    document.querySelector(activeColors).classList.remove('disabled');
+}
 
-})
+// document.getElementById('solid-bcg').addEventListener('click', (event)=> {
+//     document.querySelector('.overlay-controls').classList.remove('disabled');  
+//     layer.classList.remove('gradient-bcg');
+//     layer.classList.add('solid-bcg');
+//     document.querySelector('.gradient-colors').classList.add('disabled');
+//     document.querySelector('.overlay-color').classList.remove('disabled');
 
-document.getElementById('gradient-bcg').addEventListener('click', (event)=> {
-    document.querySelector('.overlay-controls').classList.remove('disabled');   
-    layer.classList.remove('solid-bcg');
-    layer.classList.add('gradient-bcg');
-    document.querySelector('.overlay-color').classList.add('disabled');
-    document.querySelector('.gradient-colors').classList.remove('disabled');
-})
+// })
+
+document.getElementById('solid-bcg').addEventListener('click', () => {
+    changeBackground('solid-bcg', 'gradient-bcg', '.overlay-color', '.gradient-colors')
+});
+document.getElementById('gradient-bcg').addEventListener('click', () => {
+    changeBackground('gradient-bcg', 'solid-bcg','.gradient-colors', '.overlay-color')
+});
+
+// document.getElementById('gradient-bcg').addEventListener('click', (event)=> {
+//     document.querySelector('.overlay-controls').classList.remove('disabled');   
+//     layer.classList.remove('solid-bcg');
+//     layer.classList.add('gradient-bcg');
+//     document.querySelector('.overlay-color').classList.add('disabled');
+//     document.querySelector('.gradient-colors').classList.remove('disabled');
+// })
 
 document.getElementById('none-bcg').addEventListener('click', (event)=> {
-    const layer = document.querySelector('.layer');
+    
     layer.classList.remove('solid-bcg', 'gradient-bcg');   
     document.querySelector('.overlay-controls').classList.add('disabled');  
 })
@@ -443,18 +398,18 @@ document.querySelectorAll('.percent-color-button').forEach(button => {
 
 document.querySelector('[href="#css-code"]').addEventListener('click', ()=> {
 
-let background = getComputedStyle(document.querySelector('.layer')).getPropertyValue('background');
+let background = getComputedStyle(layer).getPropertyValue('background');
 if(document.getElementById('gradient-bcg').checked) {
     background = background.split(' ').slice(4, -8).join('');
 } else {
     background = background.split(' ').slice(0, -9).join('');
 }
 
-let filters = getComputedStyle(image).getPropertyValue('filter');
+let filters = getComputedStyle(clippedImage).getPropertyValue('filter');
 filters = filters.split(' ').filter(e =>  !e.includes('(0)')  && !e.includes('0deg') && !e.includes('0px') && !e.includes('saturate(1)') && !e.includes('brightness(1)') && !e.includes('contrast(1)') && !e.includes('opacity(1)')).join(' ');
 
-let mode = getComputedStyle(document.querySelector('.layer')).getPropertyValue('mix-blend-mode');
-let layerFilter = getComputedStyle(document.querySelector('.layer')).getPropertyValue('filter');
+let mode = getComputedStyle(layer).getPropertyValue('mix-blend-mode');
+let layerFilter = getComputedStyle(layer).getPropertyValue('filter');
 let filterProperty = filters == [] ? "" : `
 filter: ${filters};`
 let overlay = `
@@ -497,18 +452,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-  var value = croppr.getValue();
+ 
 
-document.querySelector('.cropButton').addEventListener('click', ()=> {
+croppingButton.addEventListener('click', ()=> {
    
-    // document.documentElement.style.setProperty(`--top`, '80px');
-    // const b= getComputedStyle(document.querySelector('.croppr-imageClipped')).getPropertyValue('clip');
-    // console.log(b);
-    // document.querySelector('.croppr-image').style.clip = b;
-    document.querySelector('.croppr-region').classList.toggle('disabled');
-document.querySelector('.croppr-image').classList.toggle('invisible');
-document.querySelector('.croppr-overlay').classList.toggle('invisible');
-    document.querySelector('.croppr-handleContainer').classList.toggle('disabled');
+
+    croppedRegion.classList.toggle('disabled');
+    originImage.classList.toggle('invisible');
+    croppedOverlay.classList.toggle('invisible');
+    croppedHandleContainer.classList.toggle('disabled');
    
 
    
