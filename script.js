@@ -450,7 +450,7 @@ if(document.getElementById('gradient-bcg').checked) {
     background = background.split(' ').slice(0, -9).join('');
 }
 
-let filters = getComputedStyle(document.querySelector('.image')).getPropertyValue('filter');
+let filters = getComputedStyle(image).getPropertyValue('filter');
 filters = filters.split(' ').filter(e =>  !e.includes('(0)')  && !e.includes('0deg') && !e.includes('0px') && !e.includes('saturate(1)') && !e.includes('brightness(1)') && !e.includes('contrast(1)') && !e.includes('opacity(1)')).join(' ');
 
 let mode = getComputedStyle(document.querySelector('.layer')).getPropertyValue('mix-blend-mode');
@@ -509,6 +509,7 @@ document.querySelector('.cropButton').addEventListener('click', ()=> {
 document.querySelector('.croppr-image').classList.toggle('invisible');
 document.querySelector('.croppr-overlay').classList.toggle('invisible');
     document.querySelector('.croppr-handleContainer').classList.toggle('disabled');
+   
 
    
 })
