@@ -9,12 +9,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/cropping.css">
 </head>
 
 <body>
   <header class="header">
-    <h1>
+    <h1 class="title">
       <span class='hl'>JS </span>Images Editor
     </h1>
   </header>
@@ -96,31 +97,6 @@
                   </label>
                   <input id="width" type="range" name="width" min="0" max="1000" value="600" data-sizing="px">
                 </div>
-          
-                <!-- <div class="slider-wrapper">
-                  <label class="slider-label" for="left">Crop left:
-                    <p id="left-value" class="layer-value">0px</p>
-                  </label>
-                  <input id="left" type="range" name="left" min="0" max="1000" value="0" data-sizing="px">
-              </div> -->
-                <!-- <div class="slider-wrapper">
-                  <label class="slider-label" for="right">Crop right:
-                    <p id="right-value" class="layer-value">0px</p>
-                  </label>
-                  <input id="right" type="range" name="right" min="0" max="1000" value="0" data-sizing="px">
-                </div>
-                <div class="slider-wrapper">
-                  <label class="slider-label" for="top">Crop top:
-                    <p id="top-value" class="layer-value">0px</p>
-                  </label>
-                  <input id="top" type="range" name="top" min="0" max="1000" value="0" data-sizing="px">
-                </div>
-                <div class="slider-wrapper">
-                  <label class="slider-label" for="bottom">Crop bottom:
-                    <p id="bottom-value" class="layer-value">0px</p>
-                  </label>
-                  <input id="bottom" type="range" name="bottom" min="0" max="1000" value="0" data-sizing="px">
-                </div> -->
                 <div class="slider-wrapper">
                   <label class="slider-label" for="rotateL">Rotate:
                     <p id="rotateL-value" class="layer-value">0deg</p>
@@ -128,11 +104,11 @@
                   <input id="rotateL" type="range" name="rotateL" min="-360" max="360" value="0" data-sizing="deg">
                 </div>
                 <div class="slider-wrapper switch-wrapper">
-                    <p class="">Cropping image
-                       
-                    </p>
+                  <p class="">Cropping image
+
+                  </p>
                   <div class="switch">
-                      
+
                     <label>
                       Off
                       <input class="cropButton" type="checkbox">
@@ -273,17 +249,14 @@
         </div>
         <button class="button download-button btn waves-effect waves-light" id="btn-download">
           Download</button>
-          <!-- <button class="cropButton">Crop</button> -->
+
       </div>
     </main>
   </div>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
-    crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
-  <script src="nano.js"></script>
-  <script src="script.js"></script>
- 
   <script src="https://unpkg.com/simplebar@latest/dist/simplebar.js"></script>
+  <script src="js/cropping.js"></script>
+  <script src="js/script.js"></script>
 
 </body>
 
