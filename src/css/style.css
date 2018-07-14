@@ -39,7 +39,8 @@ body {
   color: white;
   font-family: 'Roboto', sans-serif;
   font-weight: 100;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -146,9 +147,15 @@ ul.tabs>li.tab>a.active {
 }
 
 .main .simplebar-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   overflow-x: hiiden;
 }
 
@@ -168,9 +175,12 @@ ul.tabs>li.tab>a.active {
   top: 0;
   left: 0;
   width: 100%;
-  transform: rotate(var(--rotateL));
-  clip-path: inset(var(--top) var(--right) var(--bottom) var(--left));
-  filter: opacity(var(--overlay-opacity));
+  -webkit-transform: rotate(var(--rotateL));
+          transform: rotate(var(--rotateL));
+  -webkit-clip-path: inset(var(--top) var(--right) var(--bottom) var(--left));
+          clip-path: inset(var(--top) var(--right) var(--bottom) var(--left));
+  -webkit-filter: opacity(var(--overlay-opacity));
+          filter: opacity(var(--overlay-opacity));
   mix-blend-mode: var(--mode);
 }
 
@@ -185,8 +195,10 @@ ul.tabs>li.tab>a.active {
 .image,
 .croppr-image,
 .croppr-imageClipped {
-  filter: blur(var(--blur)) grayscale(var(--grayscale)) sepia(var(--sepia)) saturate(var(--saturate)) hue-rotate(var(--hue-rotate)) invert(var(--invert)) brightness(var(--brightness)) contrast(var(--contrast)) opacity(var(--opacity));
-  transform: rotate(var(--rotateL));
+  -webkit-filter: blur(var(--blur)) grayscale(var(--grayscale)) sepia(var(--sepia)) saturate(var(--saturate)) hue-rotate(var(--hue-rotate)) invert(var(--invert)) brightness(var(--brightness)) contrast(var(--contrast)) opacity(var(--opacity));
+          filter: blur(var(--blur)) grayscale(var(--grayscale)) sepia(var(--sepia)) saturate(var(--saturate)) hue-rotate(var(--hue-rotate)) invert(var(--invert)) brightness(var(--brightness)) contrast(var(--contrast)) opacity(var(--opacity));
+  -webkit-transform: rotate(var(--rotateL));
+          transform: rotate(var(--rotateL));
   width: var(--width);
   height: var(--height);
   max-width: 100%;
@@ -218,9 +230,13 @@ input[type=range]::-moz-range-track {
 }
 
 .slider-label {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   line-height: 24px;
 }
 
@@ -237,9 +253,15 @@ input[type=range]::-moz-range-track {
 }
 
 .file-uploads {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
   position: absolute;
   top: 0;
@@ -261,6 +283,7 @@ input[type=range]::-moz-range-track {
   height: 95%;
   position: relative;
   width: 0;
+  -webkit-transition: .3s;
   transition: .3s;
   overflow: hidden;
   margin-right: 20px;
@@ -274,6 +297,7 @@ input[type=text].photo-link {
   font-size: 14px;
   margin-left: 10px;
   width: 80%;
+  -webkit-transition: .3s;
   transition: .3s;
 }
 
@@ -312,12 +336,18 @@ input[type=text].photo-link {
 }
 
 .gradient-color-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   margin-bottom: 30px;
 }
 
 .percent-color-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   height: 25px;
 }
@@ -363,8 +393,12 @@ input[type=text].photo-link {
 }
 
 .color-of-gradient-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 input[type="color"] {
@@ -392,8 +426,12 @@ input[type="color"]::-moz-color-swatch {
 .overlay-color {
   width: 100%;
   margin: 50px 0 20px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .gradient-colors {
@@ -444,6 +482,8 @@ input[type=number]:focus {
 
 .switch-wrapper {
   margin: 70px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
 
