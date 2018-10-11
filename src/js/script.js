@@ -112,9 +112,7 @@ const inputUpdate = (event, input) => {
     }
 }
 
-
-const downloadImage = () => {
-
+const createCanvas = () => {
     let filters = getComputedStyle(clippedImage).getPropertyValue('filter');
     let mode = getComputedStyle(layer).getPropertyValue('mix-blend-mode');
     let overlayOpacity = getComputedStyle(layer).getPropertyValue('filter');
@@ -124,61 +122,37 @@ const downloadImage = () => {
     let gradientStop1 = document.getElementById('color1-percent').value / 100;
     let gradientStop2 = document.getElementById('color2-percent').value / 100;
 
-    let c = document.createElement('canvas');
-    let ctx = c.getContext('2d');
-    c.width = clippedImage.width;
-    c.height = clippedImage.height;
+    let canvas = document.createElement('canvas');
+    let ctx = canvas.getContext('2d');
     let width = clippedImage.width;
     let height = clippedImage.height;
-    ctx.filter = filters;
-    ctx.width = clippedImage.width;
-    ctx.height = clippedImage.height;
 
-    let clip = getComputedStyle(clippedImage).getPropertyValue('clip');
-    clip = clip.match(/\d+/g).map(Number);
-    let top = clip[0];
-    let right = width - clip[1];
-    let bottom = height - clip[2];
-    let left = clip[3];
+    [canvas, ctx].forEach(el => {
+        el.width = width;
+        el.height = height;
+    })
+
+    let clip = getComputedStyle(clippedImage).getPropertyValue('clip').match(/\d+/g).map(Number);
+    let topClip = clip[0] || 0;
+    let rightClip = width - clip[1] || 0;
+    let bottomClip = height - clip[2] || 0;;
+    let leftClip = clip[3] || 0;
     clip.length = 4;
 
-    if (top == undefined) {
-        top = 0;
-    }
-    if (right == undefined) {
-        right = 0;
-    }
-    if (bottom == undefined) {
-        bottom = 0;
-    }
-    if (left == undefined) {
-        left = 0;
-    }
-
-    let leftIm = clippedImage.naturalWidth * left / width;
-    let rightIm = clippedImage.naturalWidth * right / width;
-    let topIm = clippedImage.naturalHeight * top / height;
-    let bottomIm = clippedImage.naturalHeight * bottom / height;
-    let newWidth = width - (right + left);
-    let newHeight = height - (top + bottom);
-    let degs = getComputedStyle(document.documentElement).getPropertyValue('--rotateL');
-
-    if (degs.startsWith('-')) {
-        degs = Number(degs.match(/\d/g).join("")) * -1;
-
-    } else {
-        degs = Number(degs.match(/\d/g).join(""));
-    }
-
+    let leftIm = clippedImage.naturalWidth * leftClip / width;
+    let rightIm = clippedImage.naturalWidth * rightClip / width;
+    let topIm = clippedImage.naturalHeight * topClip / height;
+    let bottomIm = clippedImage.naturalHeight * bottomClip / height;
+    let newWidth = width - (rightClip + leftClip);
+    let newHeight = height - (topClip + bottomClip);
     let newRight = clippedImage.naturalWidth - leftIm - rightIm;
-    let newBott = clippedImage.naturalHeight - topIm - bottomIm;
-    ctx.filter = filters;
+    let newBottom = clippedImage.naturalHeight - topIm - bottomIm;
+
     let gradientDirection = document.getElementById('gradient-direction').value;
     let gradient;
+
     const fillOverlay = (x, y) => {
-
         if (document.getElementById('gradient-bcg').checked) {
-
             switch (gradientDirection) {
                 case 'to right':
                     gradient = ctx.createLinearGradient(x, y, newWidth, y);
@@ -219,31 +193,43 @@ const downloadImage = () => {
         ctx.filter = overlayOpacity;
     }
 
+    let degs = getComputedStyle(document.documentElement).getPropertyValue('--rotateL');
+
+    if (degs.startsWith('-')) {
+        degs = Number(degs.match(/\d/g).join("")) * -1;
+
+    } else {
+        degs = Number(degs.match(/\d/g).join(""));
+    }
+
+
     if (degs !== 0) {
-        c.width = clippedImage.width * 2;
-        c.height = clippedImage.height * 2;
+        canvas.width = clippedImage.width * 2;
+        canvas.height = clippedImage.height * 2;
         let radians = Math.PI / 180;
         let x = newWidth / 2;
         let y = newHeight / 2;
-        ctx.translate(c.width / 2, c.height / 2);
+        ctx.translate(canvas.width / 2, canvas.height / 2);
         ctx.rotate(degs * radians);
         ctx.filter = filters;
-        ctx.drawImage(clippedImage, leftIm, topIm, newRight, newBott, (-x), (-y), (newWidth), (newHeight));
+        ctx.drawImage(clippedImage, leftIm, topIm, newRight, newBottom, (-x), (-y), (newWidth), (newHeight));
         fillOverlay(-x, -y);
         ctx.fillRect(-x, -y, newWidth, newHeight)
     } else {
-        c.width = newWidth;
-        c.height = newHeight;
-        console.log(newHeight);
-        console.log(newWidth);
+        canvas.width = newWidth;
+        canvas.height = newHeight;
         ctx.filter = filters;
-        ctx.drawImage(clippedImage, leftIm, topIm, newRight, newBott, 0, 0, newWidth, newHeight);
+        ctx.drawImage(clippedImage, leftIm, topIm, newRight, newBottom, 0, 0, newWidth, newHeight);
         fillOverlay(0, 0);
         ctx.fillRect(0, 0, newWidth, newHeight)
     }
 
+    return canvas;
+}
+
+const downloadImage = () => {
     let link = document.createElement('a');
-    let url = c.toDataURL();
+    let url = createCanvas().toDataURL();
     link.href = url;
     link.download = "myphoto.png";
     document.body.appendChild(link);
@@ -309,7 +295,6 @@ const turnOnCropping = () => {
 }
 
 const loadURLImage = () => {
-    console.log('aaabbbb');
     if (imgUrl.value == '') {
         return
     } else {
